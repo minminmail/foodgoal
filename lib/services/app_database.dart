@@ -20,7 +20,7 @@ class AppDatabase {
 
     return openDatabase(
       path,
-      version: 1,
+      version: 3,
       onCreate: (db, version) async {
         await db.execute('''
           CREATE TABLE pantry (
@@ -61,6 +61,54 @@ class AppDatabase {
         await db.execute(
           'CREATE INDEX idx_shopping_addedAt ON shopping(addedAt)',
         );
+
+        await db.execute('''
+          CREATE TABLE user_profile (
+            id TEXT PRIMARY KEY,
+            name TEXT NOT NULL,
+            gender TEXT NOT NULL,
+            currentWeight REAL NOT NULL,
+            targetWeight REAL NOT NULL,
+            plannedWeightLossMonths INTEGER NOT NULL,
+            isVegetarian INTEGER NOT NULL DEFAULT 0,
+            age INTEGER NOT NULL,
+            height REAL NOT NULL,
+            country TEXT NOT NULL,
+            dailyCalories INTEGER NOT NULL DEFAULT 0,
+            mealCalories INTEGER NOT NULL DEFAULT 0,
+            updatedAt TEXT NOT NULL
+          )
+        ''');
+      },
+      onUpgrade: (db, oldVersion, newVersion) async {
+        if (oldVersion < 2) {
+          await db.execute('''
+            CREATE TABLE user_profile (
+              id TEXT PRIMARY KEY,
+              name TEXT NOT NULL,
+              gender TEXT NOT NULL,
+              currentWeight REAL NOT NULL,
+              targetWeight REAL NOT NULL,
+              plannedWeightLossMonths INTEGER NOT NULL,
+              isVegetarian INTEGER NOT NULL DEFAULT 0,
+              age INTEGER NOT NULL,
+              height REAL NOT NULL,
+              country TEXT NOT NULL,
+              dailyCalories INTEGER NOT NULL DEFAULT 0,
+              mealCalories INTEGER NOT NULL DEFAULT 0,
+              updatedAt TEXT NOT NULL
+            )
+          ''');
+        }
+        if (oldVersion >= 2 && oldVersion < 3) {
+          // Add calorie columns for users who already have user_profile from v2.
+          await db.execute(
+            'ALTER TABLE user_profile ADD COLUMN dailyCalories INTEGER NOT NULL DEFAULT 0',
+          );
+          await db.execute(
+            'ALTER TABLE user_profile ADD COLUMN mealCalories INTEGER NOT NULL DEFAULT 0',
+          );
+        }
       },
     );
   }
