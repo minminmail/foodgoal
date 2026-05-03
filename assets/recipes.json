@@ -1,0 +1,449 @@
+[
+  {
+    "id": "lentejas-verduras",
+    "title": "Lentejas con verduras",
+    "emoji": "🥘",
+    "cuisine": "Spanish",
+    "prepMinutes": 25,
+    "effort": "easy",
+    "approxKcal": 480,
+    "ingredients": ["lentils", "carrot", "onion", "garlic", "olive oil", "smoked paprika", "bay leaf"],
+    "steps": [
+      "Soften the diced onion, carrot and garlic in olive oil until translucent.",
+      "Add smoked paprika and toast for 30 seconds.",
+      "Stir in the lentils and bay leaf, cover with water by 2 cm.",
+      "Simmer 20 minutes, season, and serve."
+    ]
+  },
+  {
+    "id": "miso-noodle-tofu",
+    "title": "Miso noodle bowl with tofu",
+    "emoji": "🍜",
+    "cuisine": "Japanese",
+    "prepMinutes": 15,
+    "effort": "easy",
+    "approxKcal": 520,
+    "ingredients": ["tofu", "miso paste", "noodles", "spring onions", "soy sauce"],
+    "steps": [
+      "Boil noodles per packet, drain, divide between two bowls.",
+      "Whisk miso into 600 ml hot water with a splash of soy sauce.",
+      "Add cubed tofu to the broth and warm through.",
+      "Pour over the noodles and scatter sliced spring onions."
+    ]
+  },
+  {
+    "id": "garlic-prawns-rice",
+    "title": "Garlic prawns with brown rice",
+    "emoji": "🦐",
+    "cuisine": "Spanish",
+    "prepMinutes": 20,
+    "effort": "easy",
+    "approxKcal": 560,
+    "ingredients": ["prawns", "garlic", "brown rice", "olive oil", "lemon", "parsley"],
+    "steps": [
+      "Cook brown rice per packet.",
+      "Sizzle sliced garlic in olive oil, add prawns, cook 2–3 min per side.",
+      "Finish with lemon juice and chopped parsley.",
+      "Serve over the rice."
+    ]
+  },
+  {
+    "id": "huevos-al-plato",
+    "title": "Huevos al plato",
+    "emoji": "🥚",
+    "cuisine": "Spanish",
+    "prepMinutes": 15,
+    "effort": "easy",
+    "approxKcal": 420,
+    "ingredients": ["eggs", "tomato", "onion", "garlic", "olive oil", "smoked paprika"],
+    "steps": [
+      "Soften onion and garlic in olive oil.",
+      "Add chopped tomato and smoked paprika, simmer 5 minutes.",
+      "Crack eggs on top, cover, cook until whites set."
+    ]
+  },
+  {
+    "id": "brecol-ajillo",
+    "title": "Brécol al ajillo",
+    "emoji": "🥦",
+    "cuisine": "Spanish",
+    "prepMinutes": 12,
+    "effort": "easy",
+    "approxKcal": 280,
+    "ingredients": ["broccoli", "garlic", "olive oil", "chilli flakes", "lemon"],
+    "steps": [
+      "Steam broccoli florets 4 minutes.",
+      "Sizzle sliced garlic in olive oil with chilli flakes.",
+      "Toss broccoli through, finish with lemon."
+    ]
+  },
+  {
+    "id": "tomato-pasta-anchovy",
+    "title": "Tomato anchovy pasta",
+    "emoji": "🍝",
+    "cuisine": "Italian",
+    "prepMinutes": 20,
+    "effort": "easy",
+    "approxKcal": 520,
+    "ingredients": ["pasta", "tomato", "anchovy", "garlic", "olive oil", "chilli flakes"],
+    "steps": [
+      "Boil pasta in salted water.",
+      "Melt anchovies in olive oil with garlic and chilli flakes.",
+      "Add chopped tomato, simmer 5 min.",
+      "Toss with drained pasta."
+    ]
+  },
+  {
+    "id": "chickpea-stew",
+    "title": "Garbanzos con espinacas",
+    "emoji": "🍲",
+    "cuisine": "Spanish",
+    "prepMinutes": 25,
+    "effort": "easy",
+    "approxKcal": 460,
+    "ingredients": ["chickpeas", "spinach", "tomato", "garlic", "olive oil", "smoked paprika", "cumin"],
+    "steps": [
+      "Sauté garlic in olive oil with cumin and smoked paprika.",
+      "Add chopped tomato, cook 5 minutes.",
+      "Stir in chickpeas, simmer 10 minutes.",
+      "Wilt spinach through at the end."
+    ]
+  },
+  {
+    "id": "tortilla-espanola",
+    "title": "Tortilla española",
+    "emoji": "🥧",
+    "cuisine": "Spanish",
+    "prepMinutes": 30,
+    "effort": "medium",
+    "approxKcal": 560,
+    "ingredients": ["potato", "onion", "eggs", "olive oil", "salt"],
+    "steps": [
+      "Slice potatoes thin, fry slowly in olive oil with sliced onion until soft.",
+      "Drain, mix with beaten eggs, season.",
+      "Pour into a hot non-stick pan, cook 4 min, flip, cook another 3 min."
+    ]
+  },
+  {
+    "id": "gambas-ajillo",
+    "title": "Gambas al ajillo",
+    "emoji": "🦐",
+    "cuisine": "Spanish",
+    "prepMinutes": 10,
+    "effort": "easy",
+    "approxKcal": 380,
+    "ingredients": ["prawns", "garlic", "olive oil", "chilli flakes", "parsley", "bread"],
+    "steps": [
+      "Heat olive oil with sliced garlic and chilli until fragrant.",
+      "Add prawns, cook 90 seconds per side.",
+      "Sprinkle parsley, serve with bread."
+    ]
+  },
+  {
+    "id": "ensalada-mixta",
+    "title": "Ensalada mixta with tuna",
+    "emoji": "🥗",
+    "cuisine": "Spanish",
+    "prepMinutes": 8,
+    "effort": "easy",
+    "approxKcal": 380,
+    "ingredients": ["lettuce", "tomato", "onion", "tuna", "olive oil", "vinegar", "olives"],
+    "steps": [
+      "Tear lettuce into a bowl.",
+      "Add chopped tomato, sliced onion, drained tuna and olives.",
+      "Dress with olive oil and vinegar."
+    ]
+  },
+  {
+    "id": "patatas-bravas",
+    "title": "Patatas bravas",
+    "emoji": "🥔",
+    "cuisine": "Spanish",
+    "prepMinutes": 35,
+    "effort": "medium",
+    "approxKcal": 480,
+    "ingredients": ["potato", "olive oil", "tomato", "garlic", "smoked paprika", "chilli flakes"],
+    "steps": [
+      "Cube potatoes, toss with olive oil and roast at 220°C for 30 minutes.",
+      "Simmer tomato with garlic, smoked paprika and chilli flakes for 10 minutes.",
+      "Drizzle sauce over potatoes."
+    ]
+  },
+  {
+    "id": "caprese",
+    "title": "Tomato mozzarella plate",
+    "emoji": "🍅",
+    "cuisine": "Italian",
+    "prepMinutes": 5,
+    "effort": "easy",
+    "approxKcal": 380,
+    "ingredients": ["tomato", "mozzarella", "basil", "olive oil", "salt"],
+    "steps": [
+      "Slice tomato and mozzarella, fan onto a plate.",
+      "Tear basil over, drizzle olive oil, season."
+    ]
+  },
+  {
+    "id": "pasta-aglio-olio",
+    "title": "Pasta aglio e olio",
+    "emoji": "🍝",
+    "cuisine": "Italian",
+    "prepMinutes": 12,
+    "effort": "easy",
+    "approxKcal": 480,
+    "ingredients": ["pasta", "garlic", "olive oil", "chilli flakes", "parsley"],
+    "steps": [
+      "Boil pasta until just shy of al dente.",
+      "Slowly toast sliced garlic in plenty of olive oil with chilli flakes.",
+      "Toss pasta and a splash of pasta water through, finish with parsley."
+    ]
+  },
+  {
+    "id": "minestrone",
+    "title": "Minestrone soup",
+    "emoji": "🍲",
+    "cuisine": "Italian",
+    "prepMinutes": 30,
+    "effort": "medium",
+    "approxKcal": 380,
+    "ingredients": ["onion", "carrot", "celery", "tomato", "beans", "pasta", "olive oil", "garlic"],
+    "steps": [
+      "Soften onion, carrot, celery and garlic in olive oil.",
+      "Add chopped tomato and 1 L water, simmer 15 minutes.",
+      "Stir in beans and small pasta, cook another 8 minutes."
+    ]
+  },
+  {
+    "id": "greek-salad",
+    "title": "Greek salad",
+    "emoji": "🥗",
+    "cuisine": "Mediterranean",
+    "prepMinutes": 8,
+    "effort": "easy",
+    "approxKcal": 360,
+    "ingredients": ["tomato", "cucumber", "onion", "feta", "olives", "olive oil", "oregano"],
+    "steps": [
+      "Chop tomato, cucumber and onion into a bowl.",
+      "Add olives and crumbled feta.",
+      "Dress with olive oil and oregano."
+    ]
+  },
+  {
+    "id": "shakshuka",
+    "title": "Shakshuka",
+    "emoji": "🍳",
+    "cuisine": "Mediterranean",
+    "prepMinutes": 25,
+    "effort": "easy",
+    "approxKcal": 460,
+    "ingredients": ["eggs", "tomato", "pepper", "onion", "garlic", "olive oil", "cumin", "smoked paprika"],
+    "steps": [
+      "Soften onion and pepper in olive oil with cumin and paprika.",
+      "Add tomato, simmer 10 minutes.",
+      "Crack in eggs, cover, cook until whites set."
+    ]
+  },
+  {
+    "id": "hummus-bowl",
+    "title": "Hummus and roasted veg bowl",
+    "emoji": "🥣",
+    "cuisine": "Mediterranean",
+    "prepMinutes": 30,
+    "effort": "medium",
+    "approxKcal": 540,
+    "ingredients": ["chickpeas", "tahini", "lemon", "garlic", "olive oil", "carrot", "courgette"],
+    "steps": [
+      "Roast carrot and courgette with olive oil at 220°C for 25 minutes.",
+      "Blend chickpeas with tahini, lemon and garlic for hummus.",
+      "Spoon hummus on a plate, top with veg."
+    ]
+  },
+  {
+    "id": "cold-soba",
+    "title": "Cold soba with cucumber",
+    "emoji": "🥒",
+    "cuisine": "Japanese",
+    "prepMinutes": 12,
+    "effort": "easy",
+    "approxKcal": 430,
+    "ingredients": ["soba", "cucumber", "soy sauce", "sesame oil", "spring onions", "sesame seeds"],
+    "steps": [
+      "Boil soba 4 min, rinse cold.",
+      "Whisk soy sauce, a few drops of sesame oil, water for dipping.",
+      "Top noodles with sliced cucumber, spring onions and sesame seeds."
+    ]
+  },
+  {
+    "id": "tofu-stirfry",
+    "title": "Tofu and broccoli stir-fry",
+    "emoji": "🥦",
+    "cuisine": "Chinese",
+    "prepMinutes": 15,
+    "effort": "easy",
+    "approxKcal": 460,
+    "ingredients": ["tofu", "broccoli", "garlic", "ginger", "soy sauce", "rice", "sesame oil"],
+    "steps": [
+      "Cook rice.",
+      "Stir-fry cubed tofu in oil until golden.",
+      "Add garlic, ginger, broccoli, splash of water, cover 3 minutes.",
+      "Finish with soy sauce and a drizzle of sesame oil. Serve over rice."
+    ]
+  },
+  {
+    "id": "egg-fried-rice",
+    "title": "Egg fried rice",
+    "emoji": "🍚",
+    "cuisine": "Chinese",
+    "prepMinutes": 12,
+    "effort": "easy",
+    "approxKcal": 520,
+    "ingredients": ["rice", "eggs", "spring onions", "soy sauce", "garlic", "sesame oil", "peas"],
+    "steps": [
+      "Use cold cooked rice if possible.",
+      "Scramble eggs in a hot wok, push to the side.",
+      "Add garlic, peas and spring onions, then rice.",
+      "Toss with soy sauce and a few drops of sesame oil."
+    ]
+  },
+  {
+    "id": "bibimbap",
+    "title": "Quick bibimbap",
+    "emoji": "🍱",
+    "cuisine": "Korean",
+    "prepMinutes": 25,
+    "effort": "medium",
+    "approxKcal": 580,
+    "ingredients": ["rice", "eggs", "spinach", "carrot", "courgette", "soy sauce", "sesame oil", "garlic"],
+    "steps": [
+      "Cook rice.",
+      "Sauté each vegetable separately with a little garlic and sesame oil.",
+      "Fry an egg per bowl.",
+      "Pile rice, vegetables and egg, drizzle soy sauce."
+    ]
+  },
+  {
+    "id": "kimchi-fried-rice",
+    "title": "Kimchi fried rice",
+    "emoji": "🌶",
+    "cuisine": "Korean",
+    "prepMinutes": 12,
+    "effort": "easy",
+    "approxKcal": 540,
+    "ingredients": ["rice", "kimchi", "spring onions", "soy sauce", "sesame oil", "eggs"],
+    "steps": [
+      "Stir-fry chopped kimchi in oil 2 minutes.",
+      "Add rice, splash of soy and sesame oil, toss.",
+      "Top each portion with a fried egg."
+    ]
+  },
+  {
+    "id": "miso-soup",
+    "title": "Miso soup with tofu",
+    "emoji": "🍵",
+    "cuisine": "Japanese",
+    "prepMinutes": 8,
+    "effort": "easy",
+    "approxKcal": 220,
+    "ingredients": ["miso paste", "tofu", "spring onions", "wakame"],
+    "steps": [
+      "Soak wakame in cold water 5 minutes.",
+      "Heat 700 ml water but do not boil; whisk in miso.",
+      "Add cubed tofu, drained wakame, sliced spring onions."
+    ]
+  },
+  {
+    "id": "japanese-curry",
+    "title": "Japanese vegetable curry",
+    "emoji": "🍛",
+    "cuisine": "Japanese",
+    "prepMinutes": 35,
+    "effort": "medium",
+    "approxKcal": 620,
+    "ingredients": ["onion", "carrot", "potato", "curry roux", "rice", "soy sauce"],
+    "steps": [
+      "Soften chopped onion, add carrot and potato, cover with water.",
+      "Simmer 20 minutes until tender.",
+      "Stir in curry roux until thick.",
+      "Serve over rice."
+    ]
+  },
+  {
+    "id": "chicken-teriyaki",
+    "title": "Chicken teriyaki bowl",
+    "emoji": "🍗",
+    "cuisine": "Japanese",
+    "prepMinutes": 20,
+    "effort": "easy",
+    "approxKcal": 580,
+    "ingredients": ["chicken thigh", "soy sauce", "mirin", "sugar", "rice", "spring onions", "ginger"],
+    "steps": [
+      "Cook rice.",
+      "Pan-fry chicken thighs skin-side down 6 min, flip 4 min.",
+      "Add soy sauce, mirin, a teaspoon of sugar and grated ginger; reduce to a glaze.",
+      "Slice and serve over rice with spring onions."
+    ]
+  },
+  {
+    "id": "mapo-tofu",
+    "title": "Mapo tofu (mild)",
+    "emoji": "🌶",
+    "cuisine": "Chinese",
+    "prepMinutes": 20,
+    "effort": "medium",
+    "approxKcal": 510,
+    "ingredients": ["tofu", "pork mince", "garlic", "ginger", "soy sauce", "doubanjiang", "rice", "spring onions"],
+    "steps": [
+      "Brown pork mince with garlic and ginger.",
+      "Stir in doubanjiang and soy sauce.",
+      "Add 200 ml water and cubed tofu, simmer 8 minutes.",
+      "Top with spring onions and serve over rice."
+    ]
+  },
+  {
+    "id": "dal-tadka",
+    "title": "Dal tadka",
+    "emoji": "🍛",
+    "cuisine": "Indian",
+    "prepMinutes": 30,
+    "effort": "easy",
+    "approxKcal": 460,
+    "ingredients": ["lentils", "onion", "garlic", "tomato", "cumin", "turmeric", "ginger", "rice"],
+    "steps": [
+      "Simmer lentils with turmeric until soft.",
+      "Sizzle cumin in oil, add onion, garlic, ginger, then tomato.",
+      "Stir tempering through dal.",
+      "Serve over rice."
+    ]
+  },
+  {
+    "id": "chana-masala",
+    "title": "Chana masala",
+    "emoji": "🥘",
+    "cuisine": "Indian",
+    "prepMinutes": 30,
+    "effort": "medium",
+    "approxKcal": 520,
+    "ingredients": ["chickpeas", "onion", "tomato", "garlic", "ginger", "cumin", "garam masala", "rice"],
+    "steps": [
+      "Soften onion in oil with cumin.",
+      "Add ginger, garlic, then tomato; cook to a paste.",
+      "Stir in chickpeas and garam masala, simmer 15 minutes.",
+      "Serve with rice."
+    ]
+  },
+  {
+    "id": "veg-pho-style-noodles",
+    "title": "Quick veg noodle soup",
+    "emoji": "🍜",
+    "cuisine": "Generic",
+    "prepMinutes": 15,
+    "effort": "easy",
+    "approxKcal": 420,
+    "ingredients": ["noodles", "vegetable stock", "ginger", "garlic", "spring onions", "carrot", "spinach", "soy sauce"],
+    "steps": [
+      "Simmer stock with sliced ginger and garlic 5 minutes.",
+      "Add carrot ribbons and noodles, cook per packet.",
+      "Off heat, wilt spinach, finish with soy sauce and spring onions."
+    ]
+  }
+]
