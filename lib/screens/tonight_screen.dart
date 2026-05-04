@@ -4,17 +4,44 @@ import 'package:provider/provider.dart';
 
 import '../models/meal_log_entry.dart';
 import '../models/pantry_item.dart';
+import '../models/user_profile.dart';
 import '../services/meal_log_service.dart';
 import '../services/pantry_service.dart';
+import '../services/profile_service.dart';
 import '../services/ranker.dart';
 import '../services/recipe_repository.dart';
 import '../theme/app_theme.dart';
 import 'recipe_detail_screen.dart';
 
-/// The home screen. Shows three suggestion cards based on the simple
-/// ranker (pantry coverage + 7-day skip) — exactly the MVP brief.
-class TonightScreen extends StatelessWidget {
+/// Home screen — shows today's three meals (breakfast, lunch, dinner),
+/// each with a suggested recipe and calorie target from the user profile.
+class TonightScreen extends StatefulWidget {
   const TonightScreen({super.key});
+
+  @override
+  State<TonightScreen> createState() => _TonightScreenState();
+}
+
+class _TonightScreenState extends State<TonightScreen> {
+  UserProfile? _profile;
+
+  // Per-slot rotation offset — cycles through all suggestions.
+  final _slotOffset = <MealSlot, int>{
+    MealSlot.breakfast: 0,
+    MealSlot.lunch: 1,
+    MealSlot.dinner: 2,
+  };
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(_loadProfile);
+  }
+
+  Future<void> _loadProfile() async {
+    final profile = await context.read<ProfileService>().get();
+    if (mounted) setState(() => _profile = profile);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +54,7 @@ class TonightScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const _Header(),
-          const SizedBox(height: 12),
-          _GoalStrip(
-            label: 'Cook from what you have',
-            count: '3 ideas',
-          ),
+          _Header(profile: _profile),
           const SizedBox(height: 14),
           Expanded(
             child: StreamBuilder<List<PantryItem>>(
@@ -53,18 +75,46 @@ class TonightScreen extends StatelessWidget {
                       recipes: recipes.all(),
                       pantry: pantryItems,
                       recentMeals: recent,
+                      limit: 9, // enough to pick from for 3 meals
                     );
+
                     if (suggestions.isEmpty) {
                       return _EmptyState(pantryEmpty: pantryItems.isEmpty);
                     }
-                    return ListView.separated(
+
+                    Suggestion? pick(MealSlot slot) {
+                      if (suggestions.isEmpty) return null;
+                      final idx = _slotOffset[slot]! % suggestions.length;
+                      return suggestions[idx];
+                    }
+
+                    void swap(MealSlot slot) {
+                      setState(() {
+                        _slotOffset[slot] =
+                            (_slotOffset[slot]! + 1) % suggestions.length;
+                      });
+                    }
+
+                    return ListView(
                       padding: const EdgeInsets.only(bottom: 24),
-                      itemCount: suggestions.length,
-                      separatorBuilder: (_, __) => const SizedBox(height: 10),
-                      itemBuilder: (_, i) => _SuggestionCard(
-                        suggestion: suggestions[i],
-                        accent: i, // 0/1/2 → tweak the photo gradient
-                      ),
+                      children: [
+                        for (final slot in const [
+                          MealSlot.breakfast,
+                          MealSlot.lunch,
+                          MealSlot.dinner,
+                        ]) ...[
+                          if (slot != MealSlot.breakfast)
+                            const SizedBox(height: 16),
+                          _MealSection(
+                            slot: slot,
+                            suggestion: pick(slot),
+                            mealCalories: _profile?.mealCalories,
+                            onSwap: suggestions.length > 1
+                                ? () => swap(slot)
+                                : null,
+                          ),
+                        ],
+                      ],
                     );
                   },
                 );
@@ -77,13 +127,21 @@ class TonightScreen extends StatelessWidget {
   }
 }
 
+// ---------------------------------------------------------------------------
+// Header
+// ---------------------------------------------------------------------------
+
 class _Header extends StatelessWidget {
-  const _Header();
+  const _Header({this.profile});
+  final UserProfile? profile;
 
   @override
   Widget build(BuildContext context) {
     final now = DateTime.now();
-    final stamp = DateFormat('EEEE, d MMM · h:mm a').format(now);
+    final stamp = DateFormat('EEEE, d MMM').format(now);
+    final greeting = profile != null && profile!.name.isNotEmpty
+        ? 'Hi, ${profile!.name}'
+        : 'Today';
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -91,25 +149,33 @@ class _Header extends StatelessWidget {
         const SizedBox(height: 2),
         Row(
           children: [
-            const Expanded(
-              child: Text('Tonight',
-                  style: TextStyle(
-                    fontSize: 26,
-                    fontWeight: FontWeight.w800,
-                    color: AppColors.text,
-                  )),
-            ),
-            // The "+" affordance from the screen sketch — opens the log
-            // screen for a freeform meal entry.
-            CircleAvatar(
-              radius: 18,
-              backgroundColor: AppColors.brandSoft,
-              child: IconButton(
-                padding: EdgeInsets.zero,
-                icon: const Icon(Icons.add, size: 18, color: AppColors.brand),
-                onPressed: () {},
+            Expanded(
+              child: Text(
+                greeting,
+                style: const TextStyle(
+                  fontSize: 26,
+                  fontWeight: FontWeight.w800,
+                  color: AppColors.text,
+                ),
               ),
             ),
+            if (profile != null && profile!.dailyCalories > 0)
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                decoration: BoxDecoration(
+                  color: AppColors.brandSoft,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Text(
+                  '${profile!.dailyCalories} kcal/day',
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.brand,
+                  ),
+                ),
+              ),
           ],
         ),
       ],
@@ -117,56 +183,128 @@ class _Header extends StatelessWidget {
   }
 }
 
-class _GoalStrip extends StatelessWidget {
-  const _GoalStrip({required this.label, required this.count});
-  final String label;
-  final String count;
+// ---------------------------------------------------------------------------
+// Meal section (one per slot)
+// ---------------------------------------------------------------------------
+
+class _MealSection extends StatelessWidget {
+  const _MealSection({
+    required this.slot,
+    required this.suggestion,
+    this.mealCalories,
+    this.onSwap,
+  });
+
+  final MealSlot slot;
+  final Suggestion? suggestion;
+  final int? mealCalories;
+  final VoidCallback? onSwap;
+
+  static const _slotIcons = <MealSlot, IconData>{
+    MealSlot.breakfast: Icons.wb_sunny_outlined,
+    MealSlot.lunch: Icons.wb_cloudy_outlined,
+    MealSlot.dinner: Icons.nights_stay_outlined,
+  };
+
+  static const _gradients = <MealSlot, List<Color>>{
+    MealSlot.breakfast: [Color(0xFFFDE8C8), Color(0xFFF5C77E)],
+    MealSlot.lunch: [Color(0xFFC8DDD0), Color(0xFF9ABFA8)],
+    MealSlot.dinner: [Color(0xFFCBC5E0), Color(0xFF9B8EC4)],
+  };
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-      decoration: BoxDecoration(
-        color: AppColors.brand,
-        borderRadius: BorderRadius.circular(14),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              label,
-              style: const TextStyle(color: Colors.white, fontSize: 13),
+    final colors = _gradients[slot] ?? _gradients[MealSlot.lunch]!;
+    final icon = _slotIcons[slot] ?? Icons.restaurant;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Slot header row
+        Row(
+          children: [
+            Icon(icon, size: 18, color: AppColors.brand),
+            const SizedBox(width: 6),
+            Text(
+              slot.label,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            const Spacer(),
+            if (mealCalories != null && mealCalories! > 0)
+              Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: Text(
+                  '~$mealCalories kcal',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ),
+            if (onSwap != null)
+              GestureDetector(
+                onTap: onSwap,
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: AppColors.brandSoft,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.swap_horiz, size: 16, color: AppColors.brand),
+                      SizedBox(width: 4),
+                      Text(
+                        'Swap',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.brand,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+          ],
+        ),
+        const SizedBox(height: 8),
+
+        // Suggestion card or empty placeholder
+        if (suggestion != null)
+          _SuggestionCard(suggestion: suggestion!, gradient: colors)
+        else
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: AppColors.card,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: AppColors.line),
+            ),
+            child: Center(
+              child: Text(
+                'Add items to your pantry for suggestions',
+                style: TextStyle(color: AppColors.muted, fontSize: 13),
+              ),
             ),
           ),
-          Text(count,
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
-                fontSize: 13,
-              )),
-        ],
-      ),
+      ],
     );
   }
 }
 
+// ---------------------------------------------------------------------------
+// Suggestion card (reused per meal)
+// ---------------------------------------------------------------------------
+
 class _SuggestionCard extends StatelessWidget {
-  const _SuggestionCard({required this.suggestion, required this.accent});
+  const _SuggestionCard({required this.suggestion, required this.gradient});
 
   final Suggestion suggestion;
-  final int accent;
-
-  static const _gradients = <List<Color>>[
-    [Color(0xFFC8DDD0), Color(0xFF9ABFA8)],
-    [Color(0xFFE8C698), Color(0xFFD69E5E)],
-    [Color(0xFFC9D7A8), Color(0xFF97AE6D)],
-  ];
+  final List<Color> gradient;
 
   @override
   Widget build(BuildContext context) {
     final r = suggestion.recipe;
-    final gradient = _gradients[accent % _gradients.length];
-
     return InkWell(
       borderRadius: BorderRadius.circular(16),
       onTap: () => Navigator.of(context).push(
@@ -181,13 +319,14 @@ class _SuggestionCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           border: Border.all(color: AppColors.line),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Row(
           children: [
+            // Emoji thumbnail
             Container(
-              height: 84,
+              width: 56,
+              height: 56,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(12),
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
@@ -195,65 +334,46 @@ class _SuggestionCard extends StatelessWidget {
                 ),
               ),
               alignment: Alignment.center,
-              child: Text(r.emoji, style: const TextStyle(fontSize: 30)),
+              child: Text(r.emoji, style: const TextStyle(fontSize: 24)),
             ),
-            const SizedBox(height: 10),
-            Text(
-              r.title,
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            const SizedBox(height: 4),
-            Row(
-              children: [
-                Text(
-                  '${r.prepMinutes} min · ${r.effort.label}',
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                const SizedBox(width: 12),
-                Text('~${r.approxKcal} kcal',
-                    style: Theme.of(context).textTheme.bodySmall),
-              ],
-            ),
-            if (suggestion.haveIngredients.isNotEmpty) ...[
-              const SizedBox(height: 8),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(
-                  color: AppColors.brandSoft,
-                  borderRadius: BorderRadius.circular(6),
-                ),
-                child: Text(
-                  'Uses: ${_topIngredients(suggestion.haveIngredients)}',
-                  style: const TextStyle(
-                    fontSize: 11,
-                    color: AppColors.brand,
-                    fontWeight: FontWeight.w600,
+            const SizedBox(width: 12),
+            // Details
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(r.title,
+                      style: Theme.of(context).textTheme.titleMedium),
+                  const SizedBox(height: 4),
+                  Text(
+                    '${r.prepMinutes} min · ${r.effort.label} · ~${r.approxKcal} kcal',
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
-                ),
+                  if (suggestion.haveIngredients.isNotEmpty) ...[
+                    const SizedBox(height: 4),
+                    Text(
+                      'Uses: ${suggestion.haveIngredients.take(3).join(', ')}',
+                      style: const TextStyle(
+                        fontSize: 11,
+                        color: AppColors.brand,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ],
               ),
-            ] else if (suggestion.missingIngredients.isNotEmpty) ...[
-              const SizedBox(height: 8),
-              Text(
-                'Needs: ${_topIngredients(suggestion.missingIngredients)}',
-                style: const TextStyle(
-                  fontSize: 11,
-                  color: AppColors.warning,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
+            ),
+            const Icon(Icons.chevron_right, color: AppColors.muted, size: 20),
           ],
         ),
       ),
     );
   }
-
-  String _topIngredients(List<String> list) {
-    final picked = list.take(3).toList();
-    return picked.join(', ');
-  }
 }
+
+// ---------------------------------------------------------------------------
+// Empty state
+// ---------------------------------------------------------------------------
 
 class _EmptyState extends StatelessWidget {
   const _EmptyState({required this.pantryEmpty});
@@ -262,9 +382,9 @@ class _EmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final msg = pantryEmpty
-        ? 'Add a few items to your pantry and we\'ll suggest dinners you '
-            'can already cook.'
-        : 'No suggestions for tonight yet — try adding more pantry items.';
+        ? 'Add a few items to your pantry and we\'ll suggest meals you '
+            'can cook today.'
+        : 'No suggestions yet — try adding more pantry items.';
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),

@@ -6,6 +6,7 @@ import 'services/auth_service.dart';
 import 'services/meal_log_service.dart';
 import 'services/pantry_service.dart';
 import 'services/recipe_repository.dart';
+import 'services/profile_service.dart';
 import 'services/shopping_service.dart';
 import 'theme/app_theme.dart';
 
@@ -82,6 +83,9 @@ class _FoodGoalAppState extends State<FoodGoalApp> {
             ),
             Provider<ShoppingService>(
               create: (_) => ShoppingService(result.uid),
+            ),
+            Provider<ProfileService>(
+              create: (_) => ProfileService(result.uid),
             ),
           ],
           child: MaterialApp(
