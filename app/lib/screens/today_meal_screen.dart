@@ -14,7 +14,7 @@ import '../theme/app_theme.dart';
 import 'recipe_detail_screen.dart';
 
 /// Home screen — shows today's three meals (breakfast, lunch, dinner),
-/// each with a suggested recipe and calorie target from the user profile.
+/// each with a suggested recipe and calorie target from the user profile. and consider the food registered
 class TonightScreen extends StatefulWidget {
   const TonightScreen({super.key});
 
