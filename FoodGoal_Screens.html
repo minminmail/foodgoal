@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>FoodGoal — MVP screen sketches</title>
+<style>
+  :root {
+    --brand: #1F6F4A;
+    --brand-soft: #E8F2EC;
+    --bg: #F4F6F4;
+    --card: #FFFFFF;
+    --text: #1A2A22;
+    --muted: #7A8A82;
+    --line: #E1E6E2;
+    --warning: #C97A3D;
+    --warning-soft: #FBEFE3;
+  }
+  * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "SF Pro Text", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 48px 24px 80px;
+  }
+  .header {
+    max-width: 1300px;
+    margin: 0 auto 40px;
+    text-align: center;
+  }
+  .header h1 {
+    margin: 0 0 8px;
+    font-size: 38px;
+    color: var(--brand);
+    letter-spacing: -0.5px;
+  }
+  .header p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 16px;
+  }
+  .grid {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 36px;
+    justify-items: center;
+  }
+  .phone {
+    width: 300px;
+    background: var(--card);
+    border-radius: 36px;
+    padding: 12px;
+    box-shadow: 0 12px 30px rgba(31,111,74,0.12), 0 2px 6px rgba(0,0,0,0.05);
+    border: 1px solid #DDE3DE;
+  }
+  .screen {
+    background: var(--bg);
+    border-radius: 26px;
+    overflow: hidden;
+    height: 580px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .statusbar {
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 18px 0;
+    font-size: 11px;
+    color: var(--text);
+    font-weight: 600;
+  }
+  .topbar {
+    padding: 8px 18px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg);
+  }
+  .topbar h2 {
+    margin: 0;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .topbar .btn {
+    width: 28px; height: 28px;
+    background: var(--brand-soft);
+    color: var(--brand);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 16px;
+  }
+  .body {
+    flex: 1;
+    overflow: hidden;
+    padding: 0 14px;
+  }
+  .tabbar {
+    height: 56px;
+    background: var(--card);
+    border-top: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding-bottom: 4px;
+  }
+  .tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    font-size: 10px;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .tab.active { color: var(--brand); }
+  .tab .icon {
+    width: 22px; height: 22px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+
+  /* ===== Tonight screen ===== */
+  .greeting {
+    color: var(--muted);
+    font-size: 12px;
+    padding: 0 4px;
+    margin-bottom: 4px;
+  }
+  .goal-strip {
+    background: var(--brand);
+    color: #fff;
+    padding: 10px 14px;
+    border-radius: 14px;
+    font-size: 12px;
+    margin-bottom: 14px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .goal-strip .num { font-weight: 700; }
+  .meal-card {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: 1px solid var(--line);
+  }
+  .meal-card .photo {
+    height: 78px;
+    background: linear-gradient(135deg, #C8DDD0, #9ABFA8);
+    border-radius: 10px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+  }
+  .meal-card.alt1 .photo { background: linear-gradient(135deg, #E8C698, #D69E5E); }
+  .meal-card.alt2 .photo { background: linear-gradient(135deg, #C9D7A8, #97AE6D); }
+  .meal-card .title {
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 2px;
+  }
+  .meal-card .meta {
+    font-size: 11px;
+    color: var(--muted);
+    display: flex;
+    gap: 10px;
+  }
+  .uses {
+    margin-top: 6px;
+    font-size: 10px;
+    color: var(--brand);
+    background: var(--brand-soft);
+    padding: 4px 8px;
+    border-radius: 6px;
+    display: inline-block;
+  }
+
+  /* ===== Pantry screen ===== */
+  .add-bar {
+    background: var(--card);
+    border: 1px dashed var(--line);
+    color: var(--muted);
+    padding: 10px;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
+  .pantry-section {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 14px 4px 6px;
+  }
+  .pantry-item {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 10px 12px;
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+  }
+  .pantry-item .qty {
+    color: var(--muted);
+    font-size: 11px;
+  }
+
+  /* ===== Log screen ===== */
+  .day-pill {
+    background: var(--card);
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 11px;
+    color: var(--muted);
+    border: 1px solid var(--line);
+    display: inline-block;
+    margin-bottom: 12px;
+  }
+  .meal-slot {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    border: 1px solid var(--line);
+  }
+  .meal-slot .label {
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+  }
+  .meal-slot .name {
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .meal-slot.empty .name {
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .meal-slot .add-mini {
+    color: var(--brand);
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  /* ===== Shopping screen ===== */
+  .shop-item {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 10px 12px;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    border: 1px solid var(--line);
+  }
+  .check {
+    width: 18px; height: 18px;
+    border: 2px solid var(--line);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .check.done {
+    background: var(--brand);
+    border-color: var(--brand);
+    position: relative;
+  }
+  .check.done::after {
+    content: "\2713";
+    color: #fff;
+    font-size: 11px;
+    position: absolute;
+    top: 0; left: 3px;
+  }
+  .shop-item.done {
+    color: var(--muted);
+    text-decoration: line-through;
+  }
+  .for-meal {
+    font-size: 10px;
+    color: var(--muted);
+    margin-left: auto;
+  }
+  .shop-section {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 10px 4px 6px;
+  }
+
+  .caption {
+    text-align: center;
+    margin-top: 14px;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .footnote {
+    max-width: 1300px;
+    margin: 60px auto 0;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .footnote strong { color: var(--text); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>FoodGoal</h1>
+  <p>Four core screen sketches for the first MVP build</p>
+</div>
+
+<div class="grid">
+
+  <!-- ============ Screen 1: Tonight ============ -->
+  <div>
+    <div class="phone">
+      <div class="screen">
+        <div class="statusbar"><span>9:41</span><span>● ● ●</span></div>
+        <div class="topbar">
+          <h2>Tonight</h2>
+          <div class="btn">+</div>
+        </div>
+        <div class="body" style="overflow-y:auto">
+          <div class="greeting">Tuesday, 7 May · 6:42 pm</div>
+          <div class="goal-strip">
+            <span>Goal: lighter dinners</span>
+            <span class="num">3 ideas</span>
+          </div>
+
+          <div class="meal-card">
+            <div class="photo">🥘</div>
+            <div class="title">Lentejas con verduras</div>
+            <div class="meta"><span>25 min · easy</span><span>~480 kcal</span></div>
+            <div class="uses">Uses: lentils, carrot, onion</div>
+          </div>
+
+          <div class="meal-card alt1">
+            <div class="photo">🍜</div>
+            <div class="title">Miso noodle bowl with tofu</div>
+            <div class="meta"><span>15 min · easy</span><span>~520 kcal</span></div>
+            <div class="uses">Uses: tofu, miso, noodles</div>
+          </div>
+
+          <div class="meal-card alt2">
+            <div class="photo">🥗</div>
+            <div class="title">Garlic prawns with brown rice</div>
+            <div class="meta"><span>20 min · easy</span><span>~560 kcal</span></div>
+            <div class="uses">Uses: prawns, garlic, rice</div>
+          </div>
+        </div>
+        <div class="tabbar">
+          <div class="tab active"><div class="icon">🍽</div>Tonight</div>
+          <div class="tab"><div class="icon">📦</div>Pantry</div>
+          <div class="tab"><div class="icon">📓</div>Log</div>
+          <div class="tab"><div class="icon">🛒</div>Shopping</div>
+        </div>
+      </div>
+    </div>
+    <div class="caption">1. Tonight</div>
+  </div>
+
+  <!-- ============ Screen 2: Pantry ============ -->
+  <div>
+    <div class="phone">
+      <div class="screen">
+        <div class="statusbar"><span>9:41</span><span>● ● ●</span></div>
+        <div class="topbar">
+          <h2>Pantry</h2>
+          <div class="btn">+</div>
+        </div>
+        <div class="body" style="overflow-y:auto">
+          <div class="add-bar">+ Add an item to your pantry</div>
+
+          <div class="pantry-section">Fresh</div>
+          <div class="pantry-item"><span>Carrots</span><span class="qty">4</span></div>
+          <div class="pantry-item"><span>Spring onions</span><span class="qty">1 bunch</span></div>
+          <div class="pantry-item"><span>Tofu, firm</span><span class="qty">1 block</span></div>
+          <div class="pantry-item"><span>Garlic</span><span class="qty">1 head</span></div>
+
+          <div class="pantry-section">Cupboard</div>
+          <div class="pantry-item"><span>Brown lentils</span><span class="qty">500 g</span></div>
+          <div class="pantry-item"><span>Brown rice</span><span class="qty">1 kg</span></div>
+          <div class="pantry-item"><span>Soba noodles</span><span class="qty">2 packs</span></div>
+          <div class="pantry-item"><span>Miso paste</span><span class="qty">1 jar</span></div>
+          <div class="pantry-item"><span>Olive oil</span><span class="qty">600 ml</span></div>
+
+          <div class="pantry-section">Frozen</div>
+          <div class="pantry-item"><span>Prawns</span><span class="qty">300 g</span></div>
+        </div>
+        <div class="tabbar">
+          <div class="tab"><div class="icon">🍽</div>Tonight</div>
+          <div class="tab active"><div class="icon">📦</div>Pantry</div>
+          <div class="tab"><div class="icon">📓</div>Log</div>
+          <div class="tab"><div class="icon">🛒</div>Shopping</div>
+        </div>
+      </div>
+    </div>
+    <div class="caption">2. Pantry</div>
+  </div>
+
+  <!-- ============ Screen 3: Log ============ -->
+  <div>
+    <div class="phone">
+      <div class="screen">
+        <div class="statusbar"><span>9:41</span><span>● ● ●</span></div>
+        <div class="topbar">
+          <h2>Today</h2>
+          <div class="btn">+</div>
+        </div>
+        <div class="body" style="overflow-y:auto">
+          <div class="day-pill">‹ Tuesday, 7 May ›</div>
+
+          <div class="meal-slot">
+            <div class="label">Breakfast</div>
+            <div class="name">Greek yogurt, berries, oats</div>
+          </div>
+
+          <div class="meal-slot">
+            <div class="label">Lunch</div>
+            <div class="name">Leftover bibimbap</div>
+          </div>
+
+          <div class="meal-slot empty" style="text-align:center; padding:18px 12px;">
+            <div class="label" style="margin-bottom:6px;">Dinner</div>
+            <div class="name">Not logged yet</div>
+            <div class="add-mini" style="margin-top:8px;">+ Add what you ate</div>
+          </div>
+
+          <div class="meal-slot">
+            <div class="label">Snack</div>
+            <div class="name">Apple, almonds</div>
+          </div>
+
+          <div style="margin-top:20px; background:var(--brand-soft); border-radius:14px; padding:12px; font-size:12px; color:var(--brand); text-align:center;">
+            Variety this week: 6 different meals 🌿
+          </div>
+        </div>
+        <div class="tabbar">
+          <div class="tab"><div class="icon">🍽</div>Tonight</div>
+          <div class="tab"><div class="icon">📦</div>Pantry</div>
+          <div class="tab active"><div class="icon">📓</div>Log</div>
+          <div class="tab"><div class="icon">🛒</div>Shopping</div>
+        </div>
+      </div>
+    </div>
+    <div class="caption">3. Meal log</div>
+  </div>
+
+  <!-- ============ Screen 4: Shopping ============ -->
+  <div>
+    <div class="phone">
+      <div class="screen">
+        <div class="statusbar"><span>9:41</span><span>● ● ●</span></div>
+        <div class="topbar">
+          <h2>Shopping</h2>
+          <div class="btn">↗</div>
+        </div>
+        <div class="body" style="overflow-y:auto">
+          <div style="font-size:11px; color:var(--muted); margin:0 4px 8px;">
+            5 items · for the meals you picked
+          </div>
+
+          <div class="shop-section">Fresh</div>
+          <div class="shop-item">
+            <div class="check"></div>
+            <span>Spinach</span>
+            <span class="for-meal">Lentejas</span>
+          </div>
+          <div class="shop-item">
+            <div class="check"></div>
+            <span>Lemon</span>
+            <span class="for-meal">Garlic prawns</span>
+          </div>
+          <div class="shop-item done">
+            <div class="check done"></div>
+            <span>Spring onions</span>
+            <span class="for-meal">Miso bowl</span>
+          </div>
+
+          <div class="shop-section">Cupboard</div>
+          <div class="shop-item">
+            <div class="check"></div>
+            <span>Soy sauce</span>
+            <span class="for-meal">Miso bowl</span>
+          </div>
+          <div class="shop-item">
+            <div class="check"></div>
+            <span>Smoked paprika</span>
+            <span class="for-meal">Lentejas</span>
+          </div>
+
+          <div style="margin-top:18px; text-align:center; font-size:11px; color:var(--muted);">
+            Tap items as you buy them
+          </div>
+        </div>
+        <div class="tabbar">
+          <div class="tab"><div class="icon">🍽</div>Tonight</div>
+          <div class="tab"><div class="icon">📦</div>Pantry</div>
+          <div class="tab"><div class="icon">📓</div>Log</div>
+          <div class="tab active"><div class="icon">🛒</div>Shopping</div>
+        </div>
+      </div>
+    </div>
+    <div class="caption">4. Shopping list</div>
+  </div>
+
+</div>
+
+<div class="footnote">
+  <p>
+    These are <strong>low-fidelity sketches</strong> for thinking, not final design.
+    Open this file in any browser. Each phone shows roughly what the user sees on day one of the MVP.
+    The four tabs at the bottom of every screen are the entire app at this stage.
+  </p>
+</div>
+
+</body>
+</html>

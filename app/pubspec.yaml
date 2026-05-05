@@ -1,0 +1,35 @@
+name: foodgoal
+description: "FoodGoal MVP — eat from what you have, move toward the goal you set."
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+  flutter: ">=3.19.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.6
+
+  # Local database
+  sqflite: ^2.3.0
+  path: ^1.8.0
+
+  # State / utilities
+  provider: ^6.1.1
+  intl: ^0.19.0
+  uuid: ^4.3.3
+  collection: ^1.18.0
+  fl_chart: ^0.69.0
+
+  firebase_core: any
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/recipes.json
