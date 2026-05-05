@@ -184,7 +184,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       contentPadding: EdgeInsets.zero,
                       title: const Text('Vegetarian'),
                       activeTrackColor: AppColors.brandSoft,
-                      thumbColor: WidgetStatePropertyAll(AppColors.brand),
+                      thumbColor: const WidgetStatePropertyAll(AppColors.brand),
                       value: _isVegetarian,
                       onChanged: (v) => setState(() => _isVegetarian = v),
                     ),

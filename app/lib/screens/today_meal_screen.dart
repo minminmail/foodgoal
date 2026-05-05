@@ -19,10 +19,10 @@ class TonightScreen extends StatefulWidget {
   const TonightScreen({super.key});
 
   @override
-  State<TonightScreen> createState() => _TonightScreenState();
+  State<TonightScreen> createState() => TonightScreenState();
 }
 
-class _TonightScreenState extends State<TonightScreen> {
+class TonightScreenState extends State<TonightScreen> {
   UserProfile? _profile;
 
   // Per-slot rotation offset — cycles through all suggestions.
@@ -42,6 +42,8 @@ class _TonightScreenState extends State<TonightScreen> {
     final profile = await context.read<ProfileService>().get();
     if (mounted) setState(() => _profile = profile);
   }
+
+  void reloadProfile() => _loadProfile();
 
   @override
   Widget build(BuildContext context) {
@@ -280,7 +282,7 @@ class _MealSection extends StatelessWidget {
               borderRadius: BorderRadius.circular(16),
               border: Border.all(color: AppColors.line),
             ),
-            child: Center(
+            child: const Center(
               child: Text(
                 'Add items to your pantry for suggestions',
                 style: TextStyle(color: AppColors.muted, fontSize: 13),

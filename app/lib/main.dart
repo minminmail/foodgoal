@@ -8,6 +8,7 @@ import 'services/pantry_service.dart';
 import 'services/recipe_repository.dart';
 import 'services/profile_service.dart';
 import 'services/shopping_service.dart';
+import 'services/weight_service.dart';
 import 'theme/app_theme.dart';
 
 Future<void> main() async {
@@ -86,6 +87,9 @@ class _FoodGoalAppState extends State<FoodGoalApp> {
             ),
             Provider<ProfileService>(
               create: (_) => ProfileService(result.uid),
+            ),
+            Provider<WeightService>(
+              create: (_) => WeightService(result.uid),
             ),
           ],
           child: MaterialApp(

@@ -20,7 +20,7 @@ class AppDatabase {
 
     return openDatabase(
       path,
-      version: 3,
+      version: 4,
       onCreate: (db, version) async {
         await db.execute('''
           CREATE TABLE pantry (
@@ -63,6 +63,18 @@ class AppDatabase {
         );
 
         await db.execute('''
+          CREATE TABLE weight_entries (
+            id TEXT PRIMARY KEY,
+            period TEXT NOT NULL,
+            weight REAL NOT NULL,
+            recordedAt TEXT NOT NULL
+          )
+        ''');
+        await db.execute(
+          'CREATE INDEX idx_weight_entries_recordedAt ON weight_entries(recordedAt)',
+        );
+
+        await db.execute('''
           CREATE TABLE user_profile (
             id TEXT PRIMARY KEY,
             name TEXT NOT NULL,
@@ -100,13 +112,26 @@ class AppDatabase {
             )
           ''');
         }
-        if (oldVersion >= 2 && oldVersion < 3) {
+        if (oldVersion < 3) {
           // Add calorie columns for users who already have user_profile from v2.
           await db.execute(
             'ALTER TABLE user_profile ADD COLUMN dailyCalories INTEGER NOT NULL DEFAULT 0',
           );
           await db.execute(
             'ALTER TABLE user_profile ADD COLUMN mealCalories INTEGER NOT NULL DEFAULT 0',
+          );
+        }
+        if (oldVersion < 4) {
+          await db.execute('''
+            CREATE TABLE weight_entries (
+              id TEXT PRIMARY KEY,
+              period TEXT NOT NULL,
+              weight REAL NOT NULL,
+              recordedAt TEXT NOT NULL
+            )
+          ''');
+          await db.execute(
+            'CREATE INDEX idx_weight_entries_recordedAt ON weight_entries(recordedAt)',
           );
         }
       },
