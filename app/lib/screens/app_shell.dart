@@ -55,7 +55,7 @@ class _AppShellState extends State<AppShell> {
           BottomNavigationBarItem(
             icon: Icon(Icons.menu_book_outlined),
             activeIcon: Icon(Icons.menu_book),
-            label: 'Log',
+            label: 'Meal Track',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.monitor_weight_outlined),

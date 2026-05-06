@@ -20,7 +20,7 @@ class AppDatabase {
 
     return openDatabase(
       path,
-      version: 4,
+      version: 5,
       onCreate: (db, version) async {
         await db.execute('''
           CREATE TABLE pantry (
@@ -38,7 +38,9 @@ class AppDatabase {
             slot TEXT NOT NULL,
             name TEXT NOT NULL,
             recipeId TEXT,
-            eatenAt TEXT NOT NULL
+            eatenAt TEXT NOT NULL,
+            grams REAL,
+            calories REAL
           )
         ''');
 
@@ -132,6 +134,14 @@ class AppDatabase {
           ''');
           await db.execute(
             'CREATE INDEX idx_weight_entries_recordedAt ON weight_entries(recordedAt)',
+          );
+        }
+        if (oldVersion < 5) {
+          await db.execute(
+            'ALTER TABLE meal_log ADD COLUMN grams REAL',
+          );
+          await db.execute(
+            'ALTER TABLE meal_log ADD COLUMN calories REAL',
           );
         }
       },

@@ -6,8 +6,6 @@ import '../models/meal_log_entry.dart';
 import '../services/meal_log_service.dart';
 import '../theme/app_theme.dart';
 
-/// One-tap meal log. The brief explicitly says no portion sizes or
-/// calories — just record what was eaten and when, by slot.
 class LogScreen extends StatefulWidget {
   const LogScreen({super.key});
 
@@ -29,7 +27,7 @@ class _LogScreenState extends State<LogScreen> {
     return Scaffold(
       backgroundColor: AppColors.bg,
       appBar: AppBar(
-        title: Text(isToday ? 'Today' : DateFormat('EEEE').format(_day)),
+        title: Text(isToday ? 'Meal Track' : DateFormat('EEEE').format(_day)),
       ),
       body: StreamBuilder<List<MealLogEntry>>(
         stream: mealLog.watchDay(_day),
@@ -39,8 +37,6 @@ class _LogScreenState extends State<LogScreen> {
             for (final s in MealSlot.values) s: null,
           };
           for (final e in entries) {
-            // If multiple entries exist for a slot, the most recent wins
-            // for the headline; the rest still live on disk.
             final cur = bySlot[e.slot];
             if (cur == null || e.eatenAt.isAfter(cur.eatenAt)) {
               bySlot[e.slot] = e;
@@ -73,8 +69,13 @@ class _LogScreenState extends State<LogScreen> {
     MealSlot slot,
     MealLogEntry? existing,
   ) async {
-    final controller = TextEditingController(text: existing?.name ?? '');
-    final result = await showModalBottomSheet<String>(
+    final nameController = TextEditingController(text: existing?.name ?? '');
+    final gramsController = TextEditingController(
+      text: existing?.grams != null ? existing!.grams!.toStringAsFixed(0) : '',
+    );
+    double? previewCalories = existing?.calories;
+
+    final result = await showModalBottomSheet<_MealInput>(
       context: context,
       isScrollControlled: true,
       backgroundColor: AppColors.card,
@@ -83,48 +84,90 @@ class _LogScreenState extends State<LogScreen> {
       ),
       builder: (ctx) {
         final inset = MediaQuery.of(ctx).viewInsets.bottom;
-        return Padding(
-          padding: EdgeInsets.fromLTRB(20, 18, 20, 18 + inset),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Log ${slot.label.toLowerCase()}',
-                  style: Theme.of(ctx).textTheme.titleLarge),
-              const SizedBox(height: 14),
-              TextField(
-                controller: controller,
-                autofocus: true,
-                decoration: const InputDecoration(
-                  labelText: 'What did you eat?',
-                  border: OutlineInputBorder(),
-                ),
-                onSubmitted: (v) => Navigator.of(ctx).pop(v),
+        return StatefulBuilder(
+          builder: (ctx, setSheetState) {
+            return Padding(
+              padding: EdgeInsets.fromLTRB(20, 18, 20, 18 + inset),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Log ${slot.label.toLowerCase()}',
+                      style: Theme.of(ctx).textTheme.titleLarge),
+                  const SizedBox(height: 14),
+                  TextField(
+                    controller: nameController,
+                    autofocus: true,
+                    decoration: const InputDecoration(
+                      labelText: 'What did you eat?',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  TextField(
+                    controller: gramsController,
+                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                    decoration: const InputDecoration(
+                      labelText: 'Grams (optional)',
+                      border: OutlineInputBorder(),
+                      suffixText: 'g',
+                    ),
+                    onChanged: (v) {
+                      final g = double.tryParse(v);
+                      setSheetState(() {
+                        previewCalories = g != null ? g * 1.5 : null;
+                      });
+                    },
+                  ),
+                  if (previewCalories != null) ...[
+                    const SizedBox(height: 8),
+                    Text(
+                      '~${previewCalories!.toStringAsFixed(0)} kcal',
+                      style: const TextStyle(
+                        color: AppColors.brand,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                  const SizedBox(height: 16),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        final name = nameController.text.trim();
+                        if (name.isEmpty) return;
+                        final g = double.tryParse(gramsController.text);
+                        Navigator.of(ctx).pop(_MealInput(
+                          name: name,
+                          grams: g,
+                          calories: g != null ? g * 1.5 : null,
+                        ));
+                      },
+                      child: const Text('Log it'),
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 16),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () =>
-                      Navigator.of(ctx).pop(controller.text.trim()),
-                  child: const Text('Log it'),
-                ),
-              ),
-            ],
-          ),
+            );
+          },
         );
       },
     );
-    if (result == null || result.isEmpty) return;
+    if (result == null) return;
 
-    // Stamp the entry on the displayed day, but with the current time
-    // if it's today (so the 7-day recency rule stays accurate).
     final now = DateTime.now();
     final eatenAt = _isSameDay(_day, now)
         ? now
         : DateTime(_day.year, _day.month, _day.day, 12);
 
-    await mealLog.log(slot: slot, name: result, eatenAt: eatenAt);
+    await mealLog.log(
+      slot: slot,
+      name: result.name,
+      eatenAt: eatenAt,
+      grams: result.grams,
+      calories: result.calories,
+    );
   }
 
   int _distinctMealsThisWeek(List<MealLogEntry> entries) {
@@ -138,6 +181,14 @@ class _LogScreenState extends State<LogScreen> {
 
   bool _isSameDay(DateTime a, DateTime b) =>
       a.year == b.year && a.month == b.month && a.day == b.day;
+}
+
+class _MealInput {
+  final String name;
+  final double? grams;
+  final double? calories;
+
+  _MealInput({required this.name, this.grams, this.calories});
 }
 
 class _DayPill extends StatelessWidget {
@@ -228,14 +279,23 @@ class _MealSlotCard extends StatelessWidget {
                         fontSize: 12,
                         fontWeight: FontWeight.w600)),
               ] else
-                Text(entry!.name,
-                    style: const TextStyle(
-                        fontSize: 14, fontWeight: FontWeight.w600)),
+                Text(
+                  _buildEntryText(entry!),
+                  style: const TextStyle(
+                      fontSize: 14, fontWeight: FontWeight.w600),
+                ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  String _buildEntryText(MealLogEntry e) {
+    final parts = <String>[e.name];
+    if (e.grams != null) parts.add('${e.grams!.toStringAsFixed(0)}g');
+    if (e.calories != null) parts.add('${e.calories!.toStringAsFixed(0)} kcal');
+    return parts.join(' · ');
   }
 }
 
