@@ -17,6 +17,7 @@ class WeightScreen extends StatefulWidget {
 class _WeightScreenState extends State<WeightScreen> {
   final _today = DateTime.now();
   String _selectedRange = '1M';
+  int _refreshKey = 0;
 
   static const _ranges = {
     '1W': Duration(days: 7),
@@ -26,9 +27,15 @@ class _WeightScreenState extends State<WeightScreen> {
     '1Y': Duration(days: 365),
   };
 
+  void _triggerRefresh() {
+    setState(() => _refreshKey++);
+  }
+
   @override
   Widget build(BuildContext context) {
     final svc = context.read<WeightService>();
+    final rangeDuration = _ranges[_selectedRange]!;
+    final from = _today.subtract(rangeDuration);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,6 +72,7 @@ class _WeightScreenState extends State<WeightScreen> {
                         onRemove: recorded != null
                             ? () async {
                                 await svc.remove(recorded.id);
+                                _triggerRefresh();
                               }
                             : null,
                       ),
@@ -115,13 +123,34 @@ class _WeightScreenState extends State<WeightScreen> {
         const SizedBox(height: 16),
 
         // Chart
-        Expanded(
+        SizedBox(
+          height: 200,
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(8, 0, 20, 16),
+            padding: const EdgeInsets.fromLTRB(8, 0, 20, 0),
             child: _WeightChart(
-              range: _ranges[_selectedRange]!,
+              key: ValueKey('chart_${_selectedRange}_$_refreshKey'),
+              range: rangeDuration,
               service: svc,
             ),
+          ),
+        ),
+
+        const SizedBox(height: 16),
+
+        // History list header
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Text('HISTORY',
+              style: Theme.of(context).textTheme.labelSmall),
+        ),
+        const SizedBox(height: 8),
+
+        // Weight history list
+        Expanded(
+          child: _WeightHistory(
+            key: ValueKey('history_$_refreshKey'),
+            from: from,
+            service: svc,
           ),
         ),
       ],
@@ -168,6 +197,7 @@ class _WeightScreenState extends State<WeightScreen> {
     );
     if (weight != null) {
       await svc.add(period: period, weight: weight);
+      _triggerRefresh();
     }
   }
 }
@@ -216,8 +246,89 @@ class _PeriodCard extends StatelessWidget {
   }
 }
 
+class _WeightHistory extends StatelessWidget {
+  const _WeightHistory({
+    super.key,
+    required this.from,
+    required this.service,
+  });
+
+  final DateTime from;
+  final WeightService service;
+
+  @override
+  Widget build(BuildContext context) {
+    final now = DateTime.now();
+    return FutureBuilder<List<WeightEntry>>(
+      future: service.fetchRange(from, now),
+      builder: (context, snap) {
+        if (snap.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        final entries = snap.data ?? [];
+        if (entries.isEmpty) {
+          return Center(
+            child: Text('No weight entries yet',
+                style: Theme.of(context).textTheme.bodySmall),
+          );
+        }
+
+        // Sort newest first
+        final sorted = List<WeightEntry>.from(entries)
+          ..sort((a, b) => b.recordedAt.compareTo(a.recordedAt));
+
+        return ListView.separated(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          itemCount: sorted.length,
+          separatorBuilder: (_, __) => const Divider(height: 1, color: AppColors.line),
+          itemBuilder: (context, index) {
+            final e = sorted[index];
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          DateFormat('EEE, d MMM yyyy').format(e.recordedAt),
+                          style: const TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          e.period.label,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: AppColors.muted,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Text(
+                    '${e.weight.toStringAsFixed(1)} kg',
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.brand,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+}
+
 class _WeightChart extends StatelessWidget {
-  const _WeightChart({required this.range, required this.service});
+  const _WeightChart({super.key, required this.range, required this.service});
 
   final Duration range;
   final WeightService service;
