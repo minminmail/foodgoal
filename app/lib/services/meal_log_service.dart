@@ -21,12 +21,7 @@ class MealLogService {
       whereArgs: [start.toIso8601String(), end.toIso8601String()],
     );
     final entries = rows
-        .map((r) => MealLogEntry.fromMap(r['id'] as String, {
-              'slot': r['slot'],
-              'name': r['name'],
-              'recipeId': r['recipeId'],
-              'eatenAt': r['eatenAt'],
-            }))
+        .map((r) => MealLogEntry.fromMap(r['id'] as String, Map<String, dynamic>.from(r)))
         .toList()
       ..sort((a, b) => a.slot.index.compareTo(b.slot.index));
     _controller.add(entries);
@@ -45,12 +40,7 @@ class MealLogService {
       whereArgs: [since.toIso8601String()],
     );
     return rows
-        .map((r) => MealLogEntry.fromMap(r['id'] as String, {
-              'slot': r['slot'],
-              'name': r['name'],
-              'recipeId': r['recipeId'],
-              'eatenAt': r['eatenAt'],
-            }))
+        .map((r) => MealLogEntry.fromMap(r['id'] as String, Map<String, dynamic>.from(r)))
         .toList();
   }
 
@@ -59,6 +49,8 @@ class MealLogService {
     required String name,
     String? recipeId,
     DateTime? eatenAt,
+    double? grams,
+    double? calories,
   }) async {
     final id = const Uuid().v4();
     final entry = MealLogEntry(
@@ -67,6 +59,8 @@ class MealLogService {
       name: name.trim(),
       recipeId: recipeId,
       eatenAt: eatenAt ?? DateTime.now(),
+      grams: grams,
+      calories: calories,
     );
     final db = await AppDatabase.instance.database;
     await db.insert('meal_log', {

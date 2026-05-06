@@ -142,6 +142,7 @@ class RecipeDetailScreen extends StatelessWidget {
       slot: MealSlot.dinner,
       name: suggestion.recipe.title,
       recipeId: suggestion.recipe.id,
+      calories: suggestion.recipe.approxKcal.toDouble(),
     );
 
     // 2. Deduct pantry items the recipe used.
