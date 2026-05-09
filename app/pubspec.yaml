@@ -24,6 +24,7 @@ dependencies:
   fl_chart: ^0.69.0
 
   firebase_core: any
+  health: ^13.3.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

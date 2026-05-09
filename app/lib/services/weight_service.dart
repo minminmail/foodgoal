@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'package:health/health.dart';
 import 'package:uuid/uuid.dart';
 
 import '../models/weight_entry.dart';
 import 'app_database.dart';
+import 'health_connect_service.dart';
 
 /// SQLite-backed CRUD for weight tracking.
 class WeightService {
@@ -72,6 +74,56 @@ class WeightService {
     });
     await _emitDay(entry.recordedAt);
     return entry;
+  }
+
+  /// Import weight entries from Health Connect for the last [days] days.
+  /// Returns the number of new entries imported (skips duplicates).
+  Future<int> syncFromHealthConnect(HealthConnectService hc, {int days = 30}) async {
+    final now = DateTime.now();
+    final from = now.subtract(Duration(days: days));
+    final dataPoints = await hc.fetchWeights(from, now);
+
+    // Fetch existing entries for deduplication
+    final existing = await fetchRange(from, now);
+    final existingKeys = <String>{};
+    for (final e in existing) {
+      // Key: weight rounded to 1 decimal + recordedAt rounded to minute
+      final key = _dedupeKey(e.weight, e.recordedAt);
+      existingKeys.add(key);
+    }
+
+    int imported = 0;
+    for (final dp in dataPoints) {
+      final weight = (dp.value as NumericHealthValue).numericValue.toDouble();
+      final recordedAt = dp.dateFrom;
+      final key = _dedupeKey(weight, recordedAt);
+
+      if (existingKeys.contains(key)) continue;
+
+      // Auto-detect period from hour
+      final hour = recordedAt.hour;
+      final WeightPeriod period;
+      if (hour < 11) {
+        period = WeightPeriod.morning;
+      } else if (hour < 17) {
+        period = WeightPeriod.midday;
+      } else {
+        period = WeightPeriod.night;
+      }
+
+      await add(period: period, weight: weight, recordedAt: recordedAt);
+      existingKeys.add(key);
+      imported++;
+    }
+
+    return imported;
+  }
+
+  static String _dedupeKey(double weight, DateTime dt) {
+    final w = weight.toStringAsFixed(1);
+    final t = DateTime(dt.year, dt.month, dt.day, dt.hour, dt.minute)
+        .toIso8601String();
+    return '$w@$t';
   }
 
   Future<void> remove(String id) async {

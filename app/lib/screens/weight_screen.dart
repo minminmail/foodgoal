@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../models/weight_entry.dart';
+import '../services/health_connect_service.dart';
 import '../services/weight_service.dart';
 import '../theme/app_theme.dart';
 
@@ -18,6 +19,7 @@ class _WeightScreenState extends State<WeightScreen> {
   final _today = DateTime.now();
   String _selectedRange = '1M';
   int _refreshKey = 0;
+  bool _syncing = false;
 
   static const _ranges = {
     '1W': Duration(days: 7),
@@ -43,8 +45,24 @@ class _WeightScreenState extends State<WeightScreen> {
         // Header
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 16, 20, 12),
-          child: Text('Weight',
-              style: Theme.of(context).textTheme.titleLarge),
+          child: Row(
+            children: [
+              Text('Weight',
+                  style: Theme.of(context).textTheme.titleLarge),
+              const Spacer(),
+              _syncing
+                  ? const SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    )
+                  : IconButton(
+                      icon: const Icon(Icons.sync, color: AppColors.brand),
+                      tooltip: 'Sync from Health Connect',
+                      onPressed: () => _syncFromHealthConnect(context, svc),
+                    ),
+            ],
+          ),
         ),
 
         // Today's period cards
@@ -155,6 +173,44 @@ class _WeightScreenState extends State<WeightScreen> {
         ),
       ],
     );
+  }
+
+  Future<void> _syncFromHealthConnect(
+    BuildContext context,
+    WeightService svc,
+  ) async {
+    setState(() => _syncing = true);
+    try {
+      final hc = context.read<HealthConnectService>();
+      final granted = await hc.requestPermission();
+      if (!granted) {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Health Connect permission denied')),
+          );
+        }
+        return;
+      }
+      final count = await svc.syncFromHealthConnect(hc);
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(count > 0
+                ? 'Imported $count weight entries'
+                : 'No new weight entries to import'),
+          ),
+        );
+      }
+      _triggerRefresh();
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Sync failed: $e')),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _syncing = false);
+    }
   }
 
   Future<void> _showInputDialog(
