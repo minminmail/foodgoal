@@ -112,7 +112,7 @@
   {
     "id": "tortilla-espanola",
     "title": "Tortilla española",
-    "emoji": "🥧",
+    "emoji": "🍳",
     "cuisine": "Spanish",
     "prepMinutes": 30,
     "effort": "medium",
@@ -339,7 +339,7 @@
   {
     "id": "miso-soup",
     "title": "Miso soup with tofu",
-    "emoji": "🍵",
+    "emoji": "🥣",
     "cuisine": "Japanese",
     "prepMinutes": 8,
     "effort": "easy",
@@ -386,7 +386,7 @@
   {
     "id": "mapo-tofu",
     "title": "Mapo tofu (mild)",
-    "emoji": "🌶",
+    "emoji": "🍲",
     "cuisine": "Chinese",
     "prepMinutes": 20,
     "effort": "medium",
