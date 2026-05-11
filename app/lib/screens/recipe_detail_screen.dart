@@ -12,9 +12,10 @@ import '../theme/app_theme.dart';
 /// pivot of the whole loop: it deducts pantry items, adds a log entry,
 /// and pushes any missing ingredients to the shopping list.
 class RecipeDetailScreen extends StatelessWidget {
-  const RecipeDetailScreen({super.key, required this.suggestion});
+  const RecipeDetailScreen({super.key, required this.suggestion, required this.slot});
 
   final Suggestion suggestion;
+  final MealSlot slot;
 
   @override
   Widget build(BuildContext context) {
@@ -137,9 +138,9 @@ class RecipeDetailScreen extends StatelessWidget {
     final mealLog = context.read<MealLogService>();
     final shop = context.read<ShoppingService>();
 
-    // 1. Log the meal as dinner — the most common slot for the Tonight loop.
+    // 1. Log the meal under the slot it was suggested for.
     await mealLog.log(
-      slot: MealSlot.dinner,
+      slot: slot,
       name: suggestion.recipe.title,
       recipeId: suggestion.recipe.id,
       calories: suggestion.recipe.approxKcal.toDouble(),

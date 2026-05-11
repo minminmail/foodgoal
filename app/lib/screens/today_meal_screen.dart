@@ -273,7 +273,7 @@ class _MealSection extends StatelessWidget {
 
         // Suggestion card or empty placeholder
         if (suggestion != null)
-          _SuggestionCard(suggestion: suggestion!, gradient: colors)
+          _SuggestionCard(suggestion: suggestion!, gradient: colors, slot: slot)
         else
           Container(
             padding: const EdgeInsets.all(16),
@@ -299,10 +299,11 @@ class _MealSection extends StatelessWidget {
 // ---------------------------------------------------------------------------
 
 class _SuggestionCard extends StatelessWidget {
-  const _SuggestionCard({required this.suggestion, required this.gradient});
+  const _SuggestionCard({required this.suggestion, required this.gradient, required this.slot});
 
   final Suggestion suggestion;
   final List<Color> gradient;
+  final MealSlot slot;
 
   @override
   Widget build(BuildContext context) {
@@ -311,7 +312,7 @@ class _SuggestionCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(16),
       onTap: () => Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (_) => RecipeDetailScreen(suggestion: suggestion),
+          builder: (_) => RecipeDetailScreen(suggestion: suggestion, slot: slot),
         ),
       ),
       child: Container(
