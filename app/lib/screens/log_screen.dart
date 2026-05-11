@@ -55,6 +55,8 @@ class _LogScreenState extends State<LogScreen> {
                   onTap: () => _addOrEdit(context, mealLog, slot, bySlot[slot]),
                 ),
               const SizedBox(height: 16),
+              _CalorieSummary(bySlot: bySlot),
+              const SizedBox(height: 10),
               _VarietyHint(distinct: _distinctMealsThisWeek(entries)),
             ],
           );
@@ -296,6 +298,56 @@ class _MealSlotCard extends StatelessWidget {
     if (e.grams != null) parts.add('${e.grams!.toStringAsFixed(0)}g');
     if (e.calories != null) parts.add('${e.calories!.toStringAsFixed(0)} kcal');
     return parts.join(' · ');
+  }
+}
+
+class _CalorieSummary extends StatelessWidget {
+  const _CalorieSummary({required this.bySlot});
+  final Map<MealSlot, MealLogEntry?> bySlot;
+
+  @override
+  Widget build(BuildContext context) {
+    final displayed = bySlot.values.whereType<MealLogEntry>().toList();
+    final total = displayed.fold<double>(0, (sum, e) => sum + (e.calories ?? 0));
+    final logged = displayed.where((e) => e.calories != null).length;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      decoration: BoxDecoration(
+        color: AppColors.card,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: AppColors.line),
+      ),
+      child: Row(
+        children: [
+          const Icon(Icons.local_fire_department, color: AppColors.brand, size: 20),
+          const SizedBox(width: 8),
+          Text(
+            '${total.toStringAsFixed(0)} kcal',
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w800,
+              color: AppColors.text,
+            ),
+          ),
+          const SizedBox(width: 6),
+          Text(
+            'total today',
+            style: TextStyle(
+              fontSize: 13,
+              color: AppColors.muted,
+            ),
+          ),
+          const Spacer(),
+          Text(
+            '$logged ${logged == 1 ? 'meal' : 'meals'} logged',
+            style: const TextStyle(
+              fontSize: 12,
+              color: AppColors.muted,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 
