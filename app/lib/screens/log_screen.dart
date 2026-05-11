@@ -55,7 +55,7 @@ class _LogScreenState extends State<LogScreen> {
                   onTap: () => _addOrEdit(context, mealLog, slot, bySlot[slot]),
                 ),
               const SizedBox(height: 16),
-              _CalorieSummary(entries: entries),
+              _CalorieSummary(bySlot: bySlot),
               const SizedBox(height: 10),
               _VarietyHint(distinct: _distinctMealsThisWeek(entries)),
             ],
@@ -302,13 +302,14 @@ class _MealSlotCard extends StatelessWidget {
 }
 
 class _CalorieSummary extends StatelessWidget {
-  const _CalorieSummary({required this.entries});
-  final List<MealLogEntry> entries;
+  const _CalorieSummary({required this.bySlot});
+  final Map<MealSlot, MealLogEntry?> bySlot;
 
   @override
   Widget build(BuildContext context) {
-    final total = entries.fold<double>(0, (sum, e) => sum + (e.calories ?? 0));
-    final logged = entries.where((e) => e.calories != null).length;
+    final displayed = bySlot.values.whereType<MealLogEntry>().toList();
+    final total = displayed.fold<double>(0, (sum, e) => sum + (e.calories ?? 0));
+    final logged = displayed.where((e) => e.calories != null).length;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       decoration: BoxDecoration(
