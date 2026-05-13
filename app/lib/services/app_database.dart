@@ -20,7 +20,7 @@ class AppDatabase {
 
     return openDatabase(
       path,
-      version: 5,
+      version: 6,
       onCreate: (db, version) async {
         await db.execute('''
           CREATE TABLE pantry (
@@ -90,7 +90,8 @@ class AppDatabase {
             country TEXT NOT NULL,
             dailyCalories INTEGER NOT NULL DEFAULT 0,
             mealCalories INTEGER NOT NULL DEFAULT 0,
-            updatedAt TEXT NOT NULL
+            updatedAt TEXT NOT NULL,
+            appLanguage TEXT NOT NULL DEFAULT 'en'
           )
         ''');
       },
@@ -110,7 +111,8 @@ class AppDatabase {
               country TEXT NOT NULL,
               dailyCalories INTEGER NOT NULL DEFAULT 0,
               mealCalories INTEGER NOT NULL DEFAULT 0,
-              updatedAt TEXT NOT NULL
+              updatedAt TEXT NOT NULL,
+            appLanguage TEXT NOT NULL DEFAULT 'en'
             )
           ''');
         }
@@ -142,6 +144,11 @@ class AppDatabase {
           );
           await db.execute(
             'ALTER TABLE meal_log ADD COLUMN calories REAL',
+          );
+        }
+        if (oldVersion < 6) {
+          await db.execute(
+            "ALTER TABLE user_profile ADD COLUMN appLanguage TEXT NOT NULL DEFAULT 'en'",
           );
         }
       },

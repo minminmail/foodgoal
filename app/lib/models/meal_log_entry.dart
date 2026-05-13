@@ -64,4 +64,17 @@ enum MealSlot {
         return 'Snack';
     }
   }
+
+  String get labelKey {
+    switch (this) {
+      case MealSlot.breakfast:
+        return 'slot_breakfast';
+      case MealSlot.lunch:
+        return 'slot_lunch';
+      case MealSlot.dinner:
+        return 'slot_dinner';
+      case MealSlot.snack:
+        return 'slot_snack';
+    }
+  }
 }

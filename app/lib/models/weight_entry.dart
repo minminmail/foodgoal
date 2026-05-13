@@ -48,6 +48,17 @@ enum WeightPeriod {
     }
   }
 
+  String get labelKey {
+    switch (this) {
+      case WeightPeriod.morning:
+        return 'weight_period_morning';
+      case WeightPeriod.midday:
+        return 'weight_period_midday';
+      case WeightPeriod.night:
+        return 'weight_period_night';
+    }
+  }
+
   String get icon {
     switch (this) {
       case WeightPeriod.morning:

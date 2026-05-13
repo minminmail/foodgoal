@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../l10n/app_translations.dart';
+import '../l10n/locale_provider.dart';
 import '../models/meal_log_entry.dart';
 import '../services/meal_log_service.dart';
 import '../services/pantry_service.dart';
@@ -8,9 +10,7 @@ import '../services/ranker.dart';
 import '../services/shopping_service.dart';
 import '../theme/app_theme.dart';
 
-/// Tap a Tonight card → land here. The "I'll cook this" button is the
-/// pivot of the whole loop: it deducts pantry items, adds a log entry,
-/// and pushes any missing ingredients to the shopping list.
+/// Tap a Tonight card -> land here.
 class RecipeDetailScreen extends StatelessWidget {
   const RecipeDetailScreen({super.key, required this.suggestion, required this.slot});
 
@@ -19,10 +19,11 @@ class RecipeDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<LocaleProvider>();
     final r = suggestion.recipe;
     return Scaffold(
       backgroundColor: AppColors.bg,
-      appBar: AppBar(title: const Text('Recipe')),
+      appBar: AppBar(title: Text(t(context, 'recipe_title'))),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
@@ -52,7 +53,7 @@ class RecipeDetailScreen extends StatelessWidget {
           ),
           const SizedBox(height: 18),
           _Section(
-            title: 'Ingredients',
+            title: t(context, 'recipe_ingredients'),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: r.ingredients.map((ing) {
@@ -77,8 +78,8 @@ class RecipeDetailScreen extends StatelessWidget {
                         ),
                       ),
                       if (!have)
-                        const Text('needs',
-                            style: TextStyle(
+                        Text(t(context, 'recipe_needs'),
+                            style: const TextStyle(
                                 fontSize: 11, color: AppColors.warning)),
                     ],
                   ),
@@ -88,7 +89,7 @@ class RecipeDetailScreen extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           _Section(
-            title: 'Steps',
+            title: t(context, 'recipe_steps'),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -115,7 +116,7 @@ class RecipeDetailScreen extends StatelessWidget {
             width: double.infinity,
             child: ElevatedButton.icon(
               icon: const Icon(Icons.local_fire_department, size: 18),
-              label: const Text("I'll cook this"),
+              label: Text(t(context, 'recipe_cook_btn')),
               onPressed: () => _cookThis(context),
             ),
           ),
@@ -125,7 +126,9 @@ class RecipeDetailScreen extends StatelessWidget {
               child: TextButton(
                 onPressed: () => _addMissingToShopping(context),
                 child: Text(
-                    'Add ${suggestion.missingIngredients.length} missing item(s) to shopping list'),
+                    tr(context, 'recipe_add_missing', {
+                      'n': '${suggestion.missingIngredients.length}',
+                    })),
               ),
             ),
         ],
@@ -138,7 +141,6 @@ class RecipeDetailScreen extends StatelessWidget {
     final mealLog = context.read<MealLogService>();
     final shop = context.read<ShoppingService>();
 
-    // 1. Log the meal under the slot it was suggested for.
     await mealLog.log(
       slot: slot,
       name: suggestion.recipe.title,
@@ -146,11 +148,8 @@ class RecipeDetailScreen extends StatelessWidget {
       calories: suggestion.recipe.approxKcal.toDouble(),
     );
 
-    // 2. Deduct pantry items the recipe used.
     await pantry.consumeIngredients(suggestion.haveIngredients);
 
-    // 3. Anything missing goes to shopping (so they're prompted to buy
-    // it next time and can cook the recipe again later).
     if (suggestion.missingIngredients.isNotEmpty) {
       await shop.addMany(
         names: suggestion.missingIngredients,
@@ -160,7 +159,7 @@ class RecipeDetailScreen extends StatelessWidget {
 
     if (!context.mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text('Logged ${suggestion.recipe.title}. Enjoy.'),
+      content: Text(tr(context, 'recipe_logged', {'title': suggestion.recipe.title})),
       behavior: SnackBarBehavior.floating,
     ));
     Navigator.of(context).pop();
@@ -173,8 +172,8 @@ class RecipeDetailScreen extends StatelessWidget {
       forRecipeTitle: suggestion.recipe.title,
     );
     if (!context.mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      content: Text('Added to shopping list.'),
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(t(context, 'recipe_added_shopping')),
       behavior: SnackBarBehavior.floating,
     ));
   }

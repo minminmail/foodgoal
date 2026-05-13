@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../l10n/app_translations.dart';
+import '../l10n/locale_provider.dart';
 import '../models/meal_log_entry.dart';
 import '../services/meal_log_service.dart';
 import '../theme/app_theme.dart';
@@ -22,12 +24,13 @@ class _LogScreenState extends State<LogScreen> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<LocaleProvider>();
     final mealLog = context.read<MealLogService>();
     final isToday = _isSameDay(_day, DateTime.now());
     return Scaffold(
       backgroundColor: AppColors.bg,
       appBar: AppBar(
-        title: Text(isToday ? 'Meal Track' : DateFormat('EEEE').format(_day)),
+        title: Text(isToday ? t(context, 'log_title') : DateFormat('EEEE').format(_day)),
       ),
       body: StreamBuilder<List<MealLogEntry>>(
         stream: mealLog.watchDay(_day),
@@ -94,24 +97,27 @@ class _LogScreenState extends State<LogScreen> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Log ${slot.label.toLowerCase()}',
+                  Text(
+                      tr(context, 'log_slot_title', {
+                        'slot': t(context, slot.labelKey).toLowerCase(),
+                      }),
                       style: Theme.of(ctx).textTheme.titleLarge),
                   const SizedBox(height: 14),
                   TextField(
                     controller: nameController,
                     autofocus: true,
-                    decoration: const InputDecoration(
-                      labelText: 'What did you eat?',
-                      border: OutlineInputBorder(),
+                    decoration: InputDecoration(
+                      labelText: t(context, 'log_what_eat'),
+                      border: const OutlineInputBorder(),
                     ),
                   ),
                   const SizedBox(height: 12),
                   TextField(
                     controller: gramsController,
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                    decoration: const InputDecoration(
-                      labelText: 'Grams (optional)',
-                      border: OutlineInputBorder(),
+                    decoration: InputDecoration(
+                      labelText: t(context, 'log_grams'),
+                      border: const OutlineInputBorder(),
                       suffixText: 'g',
                     ),
                     onChanged: (v) {
@@ -146,7 +152,7 @@ class _LogScreenState extends State<LogScreen> {
                           calories: g != null ? g * 1.5 : null,
                         ));
                       },
-                      child: const Text('Log it'),
+                      child: Text(t(context, 'log_it')),
                     ),
                   ),
                 ],
@@ -265,18 +271,18 @@ class _MealSlotCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(slot.label.toUpperCase(),
+              Text(t(context, slot.labelKey).toUpperCase(),
                   style: Theme.of(context).textTheme.labelSmall),
               const SizedBox(height: 4),
               if (isEmpty) ...[
-                const Text('Not logged yet',
-                    style: TextStyle(
+                Text(t(context, 'log_not_logged'),
+                    style: const TextStyle(
                         color: AppColors.muted,
                         fontSize: 13,
                         fontWeight: FontWeight.w500)),
                 const SizedBox(height: 6),
-                const Text('+ Add what you ate',
-                    style: TextStyle(
+                Text(t(context, 'log_add_what'),
+                    style: const TextStyle(
                         color: AppColors.brand,
                         fontSize: 12,
                         fontWeight: FontWeight.w600)),
@@ -310,6 +316,9 @@ class _CalorieSummary extends StatelessWidget {
     final displayed = bySlot.values.whereType<MealLogEntry>().toList();
     final total = displayed.fold<double>(0, (sum, e) => sum + (e.calories ?? 0));
     final logged = displayed.where((e) => e.calories != null).length;
+    final unit = logged == 1
+        ? t(context, 'log_meal_singular')
+        : t(context, 'log_meal_plural');
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       decoration: BoxDecoration(
@@ -331,15 +340,15 @@ class _CalorieSummary extends StatelessWidget {
           ),
           const SizedBox(width: 6),
           Text(
-            'total today',
-            style: TextStyle(
+            t(context, 'log_total_today'),
+            style: const TextStyle(
               fontSize: 13,
               color: AppColors.muted,
             ),
           ),
           const Spacer(),
           Text(
-            '$logged ${logged == 1 ? 'meal' : 'meals'} logged',
+            tr(context, 'log_meals_logged', {'n': '$logged', 'unit': unit}),
             style: const TextStyle(
               fontSize: 12,
               color: AppColors.muted,
@@ -357,6 +366,9 @@ class _VarietyHint extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final unit = distinct == 1
+        ? t(context, 'log_meal_singular')
+        : t(context, 'log_meal_plural');
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -365,7 +377,7 @@ class _VarietyHint extends StatelessWidget {
       ),
       child: Center(
         child: Text(
-          'Variety this week: $distinct ${distinct == 1 ? 'meal' : 'meals'}',
+          tr(context, 'log_variety', {'n': '$distinct', 'unit': unit}),
           style: const TextStyle(
             color: AppColors.brand,
             fontSize: 12,

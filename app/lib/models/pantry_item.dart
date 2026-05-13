@@ -70,4 +70,15 @@ enum PantrySection {
         return 'Frozen';
     }
   }
+
+  String get labelKey {
+    switch (this) {
+      case PantrySection.fresh:
+        return 'section_fresh';
+      case PantrySection.cupboard:
+        return 'section_cupboard';
+      case PantrySection.frozen:
+        return 'section_frozen';
+    }
+  }
 }

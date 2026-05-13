@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../l10n/app_translations.dart';
+import '../l10n/locale_provider.dart';
 import '../models/meal_log_entry.dart';
 import '../models/pantry_item.dart';
 import '../models/user_profile.dart';
@@ -14,7 +16,7 @@ import '../theme/app_theme.dart';
 import 'recipe_detail_screen.dart';
 
 /// Home screen — shows today's three meals (breakfast, lunch, dinner),
-/// each with a suggested recipe and calorie target from the user profile. and consider the food registered
+/// each with a suggested recipe and calorie target from the user profile.
 class TonightScreen extends StatefulWidget {
   const TonightScreen({super.key});
 
@@ -25,7 +27,6 @@ class TonightScreen extends StatefulWidget {
 class TonightScreenState extends State<TonightScreen> {
   UserProfile? _profile;
 
-  // Per-slot rotation offset — cycles through all suggestions.
   final _slotOffset = <MealSlot, int>{
     MealSlot.breakfast: 0,
     MealSlot.lunch: 1,
@@ -47,6 +48,7 @@ class TonightScreenState extends State<TonightScreen> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<LocaleProvider>();
     final pantry = context.read<PantryService>();
     final mealLog = context.read<MealLogService>();
     final recipes = context.read<RecipeRepository>();
@@ -77,7 +79,7 @@ class TonightScreenState extends State<TonightScreen> {
                       recipes: recipes.all(),
                       pantry: pantryItems,
                       recentMeals: recent,
-                      limit: 9, // enough to pick from for 3 meals
+                      limit: 9,
                     );
 
                     if (suggestions.isEmpty) {
@@ -142,8 +144,8 @@ class _Header extends StatelessWidget {
     final now = DateTime.now();
     final stamp = DateFormat('EEEE, d MMM').format(now);
     final greeting = profile != null && profile!.name.isNotEmpty
-        ? 'Hi, ${profile!.name}'
-        : 'Today';
+        ? tr(context, 'today_hi', {'name': profile!.name})
+        : t(context, 'today_today');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -170,7 +172,7 @@ class _Header extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Text(
-                  '${profile!.dailyCalories} kcal/day',
+                  tr(context, 'today_kcal_day', {'n': '${profile!.dailyCalories}'}),
                   style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
@@ -228,7 +230,7 @@ class _MealSection extends StatelessWidget {
             Icon(icon, size: 18, color: AppColors.brand),
             const SizedBox(width: 6),
             Text(
-              slot.label,
+              t(context, slot.labelKey),
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const Spacer(),
@@ -250,14 +252,14 @@ class _MealSection extends StatelessWidget {
                     color: AppColors.brandSoft,
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: const Row(
+                  child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(Icons.swap_horiz, size: 16, color: AppColors.brand),
-                      SizedBox(width: 4),
+                      const Icon(Icons.swap_horiz, size: 16, color: AppColors.brand),
+                      const SizedBox(width: 4),
                       Text(
-                        'Swap',
-                        style: TextStyle(
+                        t(context, 'today_swap'),
+                        style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
                           color: AppColors.brand,
@@ -282,10 +284,10 @@ class _MealSection extends StatelessWidget {
               borderRadius: BorderRadius.circular(16),
               border: Border.all(color: AppColors.line),
             ),
-            child: const Center(
+            child: Center(
               child: Text(
-                'Add items to your pantry for suggestions',
-                style: TextStyle(color: AppColors.muted, fontSize: 13),
+                t(context, 'today_add_pantry_hint'),
+                style: const TextStyle(color: AppColors.muted, fontSize: 13),
               ),
             ),
           ),
@@ -355,7 +357,9 @@ class _SuggestionCard extends StatelessWidget {
                   if (suggestion.haveIngredients.isNotEmpty) ...[
                     const SizedBox(height: 4),
                     Text(
-                      'Uses: ${suggestion.haveIngredients.take(3).join(', ')}',
+                      tr(context, 'today_uses', {
+                        'items': suggestion.haveIngredients.take(3).join(', '),
+                      }),
                       style: const TextStyle(
                         fontSize: 11,
                         color: AppColors.brand,
@@ -385,9 +389,8 @@ class _EmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final msg = pantryEmpty
-        ? 'Add a few items to your pantry and we\'ll suggest meals you '
-            'can cook today.'
-        : 'No suggestions yet — try adding more pantry items.';
+        ? t(context, 'today_empty_pantry')
+        : t(context, 'today_empty_no_suggestions');
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),

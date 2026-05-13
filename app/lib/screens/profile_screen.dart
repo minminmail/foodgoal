@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../l10n/app_translations.dart';
+import '../l10n/locale_provider.dart';
 import '../models/user_profile.dart';
 import '../services/profile_service.dart';
 import '../theme/app_theme.dart';
@@ -25,6 +27,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String _gender = 'male';
   int _plannedMonths = 6;
   bool _isVegetarian = false;
+  String _appLanguage = 'en';
   String? _existingId;
   bool _loading = true;
   int? _dailyCalories;
@@ -53,6 +56,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       _ageCtrl.text = profile.age.toString();
       _heightCtrl.text = profile.height.toString();
       _countryCtrl.text = profile.country;
+      _appLanguage = profile.appLanguage;
       if (profile.dailyCalories > 0) {
         _dailyCalories = profile.dailyCalories;
         _mealCalories = profile.mealCalories;
@@ -104,10 +108,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
       country: _countryCtrl.text.trim(),
       dailyCalories: daily,
       mealCalories: meal,
+      appLanguage: _appLanguage,
       updatedAt: DateTime.now(),
     );
     await service.save(profile);
     _existingId = profile.id;
+
+    // Update locale provider
+    if (mounted) {
+      context.read<LocaleProvider>().setLanguage(_appLanguage);
+    }
 
     setState(() {
       _dailyCalories = daily;
@@ -116,18 +126,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Profile saved')),
+        SnackBar(content: Text(t(context, 'profile_saved'))),
       );
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    context.watch<LocaleProvider>();
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         backgroundColor: AppColors.bg,
-        appBar: AppBar(title: const Text('Profile')),
+        appBar: AppBar(title: Text(t(context, 'profile_title'))),
         body: _loading
             ? const Center(child: CircularProgressIndicator())
             : Form(
@@ -135,64 +146,83 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: ListView(
                 padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
                 children: [
-                  _sectionCard('Personal', [
-                    _textField(_nameCtrl, 'Name', TextInputType.name),
+                  _sectionCard(t(context, 'profile_personal'), [
+                    _textField(_nameCtrl, t(context, 'profile_name'), TextInputType.name),
                     const SizedBox(height: 12),
                     _dropdownField<String>(
-                      label: 'Gender',
+                      label: t(context, 'profile_gender'),
                       value: _gender,
                       items: _genderOptions
                           .map((g) => DropdownMenuItem(
                                 value: g,
-                                child: Text(
-                                  g[0].toUpperCase() + g.substring(1),
-                                ),
+                                child: Text(t(context, 'gender_$g')),
                               ))
                           .toList(),
                       onChanged: (v) => setState(() => _gender = v!),
                     ),
                     const SizedBox(height: 12),
-                    _numberField(_ageCtrl, 'Age', decimal: false),
+                    _numberField(_ageCtrl, t(context, 'profile_age'), decimal: false),
                     const SizedBox(height: 12),
-                    _numberField(_heightCtrl, 'Height (cm)'),
+                    _numberField(_heightCtrl, t(context, 'profile_height')),
                     const SizedBox(height: 12),
-                    _textField(_countryCtrl, 'Country', TextInputType.text),
+                    _textField(_countryCtrl, t(context, 'profile_country'), TextInputType.text),
                   ]),
                   const SizedBox(height: 16),
-                  _sectionCard('Weight Goal', [
-                    _numberField(_currentWeightCtrl, 'Current weight (kg)'),
+                  _sectionCard(t(context, 'profile_weight_goal'), [
+                    _numberField(_currentWeightCtrl, t(context, 'profile_current_weight')),
                     const SizedBox(height: 12),
-                    _numberField(_targetWeightCtrl, 'Target weight (kg)'),
+                    _numberField(_targetWeightCtrl, t(context, 'profile_target_weight')),
                     const SizedBox(height: 12),
                     _dropdownField<int>(
-                      label: 'Planned time (months)',
+                      label: t(context, 'profile_planned_time'),
                       value: _monthOptions.contains(_plannedMonths)
                           ? _plannedMonths
                           : 6,
                       items: _monthOptions
-                          .map((m) => DropdownMenuItem(
-                                value: m,
-                                child: Text('$m month${m == 1 ? '' : 's'}'),
-                              ))
+                          .map((m) {
+                            final suffix = m == 1
+                                ? ''
+                                : t(context, 'profile_months_plural_suffix');
+                            return DropdownMenuItem(
+                              value: m,
+                              child: Text(
+                                tr(context, 'profile_months', {'n': '$m', 's': suffix}),
+                              ),
+                            );
+                          })
                           .toList(),
                       onChanged: (v) => setState(() => _plannedMonths = v!),
                     ),
                   ]),
                   const SizedBox(height: 16),
-                  _sectionCard('Diet', [
+                  _sectionCard(t(context, 'profile_diet'), [
                     SwitchListTile(
                       contentPadding: EdgeInsets.zero,
-                      title: const Text('Vegetarian'),
+                      title: Text(t(context, 'profile_vegetarian')),
                       activeTrackColor: AppColors.brandSoft,
                       thumbColor: const WidgetStatePropertyAll(AppColors.brand),
                       value: _isVegetarian,
                       onChanged: (v) => setState(() => _isVegetarian = v),
                     ),
                   ]),
+                  const SizedBox(height: 16),
+                  _sectionCard(t(context, 'profile_language'), [
+                    _dropdownField<String>(
+                      label: t(context, 'profile_language'),
+                      value: _appLanguage,
+                      items: LocaleProvider.languageNames.entries
+                          .map((e) => DropdownMenuItem(
+                                value: e.key,
+                                child: Text(e.value),
+                              ))
+                          .toList(),
+                      onChanged: (v) => setState(() => _appLanguage = v!),
+                    ),
+                  ]),
                   const SizedBox(height: 24),
                   ElevatedButton(
                     onPressed: _save,
-                    child: const Text('Save'),
+                    child: Text(t(context, 'btn_save')),
                   ),
                   if (_dailyCalories != null) ...[
                     const SizedBox(height: 24),
@@ -214,7 +244,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Your Daily Plan',
+              t(context, 'profile_daily_plan'),
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: 16),
@@ -222,14 +252,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 Expanded(
                   child: _calorieBox(
-                    'Daily Calories',
+                    t(context, 'profile_daily_calories'),
                     '$_dailyCalories kcal',
                   ),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: _calorieBox(
-                    'Per Meal',
+                    t(context, 'profile_per_meal'),
                     '$_mealCalories kcal',
                   ),
                 ),
@@ -237,7 +267,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             const SizedBox(height: 8),
             Text(
-              'Based on 3 meals per day',
+              t(context, 'profile_based_on'),
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ],
@@ -295,7 +325,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       controller: ctrl,
       keyboardType: type,
       decoration: InputDecoration(labelText: label),
-      validator: (v) => (v == null || v.trim().isEmpty) ? 'Required' : null,
+      validator: (v) => (v == null || v.trim().isEmpty) ? t(context, 'validation_required') : null,
     );
   }
 
@@ -309,9 +339,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
       keyboardType: TextInputType.numberWithOptions(decimal: decimal),
       decoration: InputDecoration(labelText: label),
       validator: (v) {
-        if (v == null || v.trim().isEmpty) return 'Required';
+        if (v == null || v.trim().isEmpty) return t(context, 'validation_required');
         final n = num.tryParse(v.trim());
-        if (n == null || n <= 0) return 'Enter a valid number';
+        if (n == null || n <= 0) return t(context, 'validation_number');
         return null;
       },
     );

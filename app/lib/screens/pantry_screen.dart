@@ -2,22 +2,24 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../l10n/app_translations.dart';
+import '../l10n/locale_provider.dart';
 import '../models/pantry_item.dart';
 import '../services/pantry_service.dart';
 import '../theme/app_theme.dart';
 
-/// Typed pantry list, grouped by section. v1: no barcode, no expiry —
-/// just name, optional quantity, and a category.
+/// Typed pantry list, grouped by section.
 class PantryScreen extends StatelessWidget {
   const PantryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    context.watch<LocaleProvider>();
     final pantry = context.read<PantryService>();
     return Scaffold(
       backgroundColor: AppColors.bg,
       appBar: AppBar(
-        title: const Text('Pantry'),
+        title: Text(t(context, 'pantry_title')),
         actions: [
           IconButton(
             icon: const Icon(Icons.add_circle, color: AppColors.brand),
@@ -55,9 +57,9 @@ class PantryScreen extends StatelessWidget {
                     ),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Center(
-                    child: Text('+ Add an item to your pantry',
-                        style: TextStyle(color: AppColors.muted)),
+                  child: Center(
+                    child: Text(t(context, 'pantry_add_item'),
+                        style: const TextStyle(color: AppColors.muted)),
                   ),
                 ),
               ),
@@ -66,7 +68,7 @@ class PantryScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 4, top: 8, bottom: 6),
                   child: Text(
-                    s.label.toUpperCase(),
+                    t(context, s.labelKey).toUpperCase(),
                     style: Theme.of(context).textTheme.labelSmall,
                   ),
                 ),
@@ -90,15 +92,15 @@ class PantryScreen extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text(
-              'Your pantry is empty.\nAdd a few items so we can suggest dinners.',
+            Text(
+              t(context, 'pantry_empty'),
               textAlign: TextAlign.center,
-              style: TextStyle(color: AppColors.muted, fontSize: 14),
+              style: const TextStyle(color: AppColors.muted, fontSize: 14),
             ),
             const SizedBox(height: 18),
             ElevatedButton(
               onPressed: () => _showAddSheet(context, pantry),
-              child: const Text('Add an item'),
+              child: Text(t(context, 'pantry_add_btn')),
             ),
           ],
         ),
@@ -241,31 +243,34 @@ class _PantryEditorState extends State<_PantryEditor> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            widget.existing == null ? 'Add to pantry' : 'Edit pantry item',
+            widget.existing == null
+                ? t(context, 'pantry_add_title')
+                : t(context, 'pantry_edit_title'),
             style: Theme.of(context).textTheme.titleLarge,
           ),
           const SizedBox(height: 16),
           TextField(
             controller: _name,
             autofocus: true,
-            decoration: const InputDecoration(
-              labelText: 'Name (e.g. Carrots)',
-              border: OutlineInputBorder(),
+            decoration: InputDecoration(
+              labelText: t(context, 'pantry_name_hint'),
+              border: const OutlineInputBorder(),
             ),
           ),
           const SizedBox(height: 12),
           TextField(
             controller: _qty,
-            decoration: const InputDecoration(
-              labelText: 'Quantity (optional, e.g. 4 or 1 kg)',
-              border: OutlineInputBorder(),
+            decoration: InputDecoration(
+              labelText: t(context, 'pantry_qty_hint'),
+              border: const OutlineInputBorder(),
             ),
           ),
           const SizedBox(height: 14),
           SegmentedButton<PantrySection>(
             showSelectedIcon: false,
             segments: PantrySection.values
-                .map((s) => ButtonSegment(value: s, label: Text(s.label)))
+                .map((s) => ButtonSegment(
+                    value: s, label: Text(t(context, s.labelKey))))
                 .toList(),
             selected: {_section},
             onSelectionChanged: (s) =>
@@ -276,7 +281,9 @@ class _PantryEditorState extends State<_PantryEditor> {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: _save,
-              child: Text(widget.existing == null ? 'Add' : 'Save'),
+              child: Text(widget.existing == null
+                  ? t(context, 'btn_add')
+                  : t(context, 'btn_save')),
             ),
           ),
         ],

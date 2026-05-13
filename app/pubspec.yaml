@@ -10,6 +10,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   cupertino_icons: ^1.0.6
 
   # Local database
@@ -18,7 +20,7 @@ dependencies:
 
   # State / utilities
   provider: ^6.1.1
-  intl: ^0.19.0
+  intl: 0.20.2
   uuid: ^4.3.3
   collection: ^1.18.0
   fl_chart: ^0.69.0

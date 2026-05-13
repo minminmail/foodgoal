@@ -3,6 +3,8 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../l10n/app_translations.dart';
+import '../l10n/locale_provider.dart';
 import '../models/weight_entry.dart';
 import '../services/health_connect_service.dart';
 import '../services/weight_service.dart';
@@ -35,6 +37,7 @@ class _WeightScreenState extends State<WeightScreen> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<LocaleProvider>();
     final svc = context.read<WeightService>();
     final rangeDuration = _ranges[_selectedRange]!;
     final from = _today.subtract(rangeDuration);
@@ -47,7 +50,7 @@ class _WeightScreenState extends State<WeightScreen> {
           padding: const EdgeInsets.fromLTRB(20, 16, 20, 12),
           child: Row(
             children: [
-              Text('Weight',
+              Text(t(context, 'weight_title'),
                   style: Theme.of(context).textTheme.titleLarge),
               const Spacer(),
               _syncing
@@ -58,7 +61,7 @@ class _WeightScreenState extends State<WeightScreen> {
                     )
                   : IconButton(
                       icon: const Icon(Icons.sync, color: AppColors.brand),
-                      tooltip: 'Sync from Health Connect',
+                      tooltip: t(context, 'weight_sync_tooltip'),
                       onPressed: () => _syncFromHealthConnect(context, svc),
                     ),
             ],
@@ -158,7 +161,7 @@ class _WeightScreenState extends State<WeightScreen> {
         // History list header
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Text('HISTORY',
+          child: Text(t(context, 'weight_history'),
               style: Theme.of(context).textTheme.labelSmall),
         ),
         const SizedBox(height: 8),
@@ -186,7 +189,7 @@ class _WeightScreenState extends State<WeightScreen> {
       if (!granted) {
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Health Connect permission denied')),
+            SnackBar(content: Text(t(context, 'weight_sync_denied'))),
           );
         }
         return;
@@ -196,8 +199,8 @@ class _WeightScreenState extends State<WeightScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(count > 0
-                ? 'Imported $count weight entries'
-                : 'No new weight entries to import'),
+                ? tr(context, 'weight_sync_imported', {'n': '$count'})
+                : t(context, 'weight_sync_none')),
           ),
         );
       }
@@ -205,7 +208,7 @@ class _WeightScreenState extends State<WeightScreen> {
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Sync failed: $e')),
+          SnackBar(content: Text(tr(context, 'weight_sync_failed', {'error': '$e'}))),
         );
       }
     } finally {
@@ -219,16 +222,17 @@ class _WeightScreenState extends State<WeightScreen> {
     WeightPeriod period,
   ) async {
     final controller = TextEditingController();
+    final periodLabel = t(context, period.labelKey);
     final weight = await showDialog<double>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text('${period.label} Weight'),
+        title: Text(tr(context, 'weight_dialog_title', {'period': periodLabel})),
         content: TextField(
           controller: controller,
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
           autofocus: true,
-          decoration: const InputDecoration(
-            hintText: 'Enter weight in kg',
+          decoration: InputDecoration(
+            hintText: t(context, 'weight_hint'),
             suffixText: 'kg',
           ),
           onSubmitted: (v) {
@@ -239,14 +243,14 @@ class _WeightScreenState extends State<WeightScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('Cancel'),
+            child: Text(t(context, 'btn_cancel')),
           ),
           TextButton(
             onPressed: () {
               final val = double.tryParse(controller.text);
               if (val != null && val > 0) Navigator.pop(ctx, val);
             },
-            child: const Text('Save'),
+            child: Text(t(context, 'btn_save')),
           ),
         ],
       ),
@@ -282,7 +286,7 @@ class _PeriodCard extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
           child: Column(
             children: [
-              Text(period.label,
+              Text(t(context, period.labelKey),
                   style: Theme.of(context).textTheme.bodySmall),
               const SizedBox(height: 8),
               entry != null
@@ -324,7 +328,7 @@ class _WeightHistory extends StatelessWidget {
         final entries = snap.data ?? [];
         if (entries.isEmpty) {
           return Center(
-            child: Text('No weight entries yet',
+            child: Text(t(context, 'weight_no_entries'),
                 style: Theme.of(context).textTheme.bodySmall),
           );
         }
@@ -356,7 +360,7 @@ class _WeightHistory extends StatelessWidget {
                         ),
                         const SizedBox(height: 2),
                         Text(
-                          e.period.label,
+                          t(context, e.period.labelKey),
                           style: const TextStyle(
                             fontSize: 12,
                             color: AppColors.muted,
@@ -404,7 +408,7 @@ class _WeightChart extends StatelessWidget {
         final entries = snap.data ?? [];
         if (entries.isEmpty) {
           return Center(
-            child: Text('No weight data yet',
+            child: Text(t(context, 'weight_no_data'),
                 style: Theme.of(context).textTheme.bodySmall),
           );
         }

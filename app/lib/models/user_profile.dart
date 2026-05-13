@@ -12,6 +12,7 @@ class UserProfile {
   final String country;
   final int dailyCalories; // kcal
   final int mealCalories; // kcal per meal (3 meals/day)
+  final String appLanguage; // 'en', 'es', 'zh'
   final DateTime updatedAt;
 
   UserProfile({
@@ -27,6 +28,7 @@ class UserProfile {
     required this.country,
     this.dailyCalories = 0,
     this.mealCalories = 0,
+    this.appLanguage = 'en',
     required this.updatedAt,
   });
 
@@ -75,6 +77,7 @@ class UserProfile {
         'country': country,
         'dailyCalories': dailyCalories,
         'mealCalories': mealCalories,
+        'appLanguage': appLanguage,
         'updatedAt': updatedAt.toIso8601String(),
       };
 
@@ -92,6 +95,7 @@ class UserProfile {
       country: map['country'] as String? ?? '',
       dailyCalories: map['dailyCalories'] as int? ?? 0,
       mealCalories: map['mealCalories'] as int? ?? 0,
+      appLanguage: map['appLanguage'] as String? ?? 'en',
       updatedAt: DateTime.parse(
         map['updatedAt'] as String? ?? DateTime.now().toIso8601String(),
       ),
@@ -110,6 +114,7 @@ class UserProfile {
     String? country,
     int? dailyCalories,
     int? mealCalories,
+    String? appLanguage,
   }) {
     return UserProfile(
       id: id,
@@ -125,6 +130,7 @@ class UserProfile {
       country: country ?? this.country,
       dailyCalories: dailyCalories ?? this.dailyCalories,
       mealCalories: mealCalories ?? this.mealCalories,
+      appLanguage: appLanguage ?? this.appLanguage,
       updatedAt: DateTime.now(),
     );
   }

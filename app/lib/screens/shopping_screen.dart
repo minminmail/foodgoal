@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../l10n/app_translations.dart';
+import '../l10n/locale_provider.dart';
 import '../models/shopping_item.dart';
 import '../services/shopping_service.dart';
 import '../theme/app_theme.dart';
 
-/// Missing ingredients from chosen meals collect here. Tap to tick off,
-/// long-press / swipe to delete, action button clears all checked.
+/// Missing ingredients from chosen meals collect here.
 class ShoppingScreen extends StatelessWidget {
   const ShoppingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    context.watch<LocaleProvider>();
     final shop = context.read<ShoppingService>();
     return Scaffold(
       backgroundColor: AppColors.bg,
       appBar: AppBar(
-        title: const Text('Shopping'),
+        title: Text(t(context, 'shopping_title')),
         actions: [
           IconButton(
-            tooltip: 'Clear ticked items',
+            tooltip: t(context, 'shopping_clear_tooltip'),
             icon: const Icon(Icons.cleaning_services_outlined,
                 color: AppColors.brand),
             onPressed: () => shop.clearChecked(),
@@ -34,7 +36,7 @@ class ShoppingScreen extends StatelessWidget {
           }
           final items = snap.data!;
           if (items.isEmpty) {
-            return const _Empty();
+            return _Empty();
           }
 
           // Tickbox UX: unchecked first, oldest at top; checked drift down.
@@ -50,10 +52,13 @@ class ShoppingScreen extends StatelessWidget {
             itemBuilder: (_, i) {
               if (i == 0) {
                 final pending = items.where((it) => !it.checked).length;
+                final unit = pending == 1
+                    ? t(context, 'shopping_item_singular')
+                    : t(context, 'shopping_item_plural');
                 return Padding(
                   padding: const EdgeInsets.only(left: 4, bottom: 6),
                   child: Text(
-                    '$pending ${pending == 1 ? 'item' : 'items'} · for the meals you picked',
+                    tr(context, 'shopping_summary', {'n': '$pending', 'unit': unit}),
                     style: const TextStyle(
                         fontSize: 11, color: AppColors.muted),
                   ),
@@ -164,16 +169,15 @@ class _Tick extends StatelessWidget {
 }
 
 class _Empty extends StatelessWidget {
-  const _Empty();
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    return Center(
       child: Padding(
-        padding: EdgeInsets.all(32),
+        padding: const EdgeInsets.all(32),
         child: Text(
-          'Nothing on the list yet.\nPick a meal on Tonight and the missing ingredients will show up here.',
+          t(context, 'shopping_empty'),
           textAlign: TextAlign.center,
-          style: TextStyle(color: AppColors.muted),
+          style: const TextStyle(color: AppColors.muted),
         ),
       ),
     );

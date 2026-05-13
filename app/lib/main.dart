@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
+import 'l10n/locale_provider.dart';
 import 'screens/app_shell.dart';
 import 'services/auth_service.dart';
 import 'services/meal_log_service.dart';
@@ -37,7 +39,11 @@ class _FoodGoalAppState extends State<FoodGoalApp> {
     final auth = AuthService();
     final uid = await auth.ensureSignedIn();
     final recipes = await RecipeRepository.load();
-    return _BootstrapResult(uid: uid, recipes: recipes);
+    // Load saved language from profile
+    final profileService = ProfileService(uid);
+    final profile = await profileService.get();
+    final lang = profile?.appLanguage ?? 'en';
+    return _BootstrapResult(uid: uid, recipes: recipes, language: lang);
   }
 
   @override
@@ -95,12 +101,28 @@ class _FoodGoalAppState extends State<FoodGoalApp> {
             Provider<HealthConnectService>(
               create: (_) => HealthConnectService(),
             ),
+            ChangeNotifierProvider<LocaleProvider>(
+              create: (_) => LocaleProvider(result.language),
+            ),
           ],
-          child: MaterialApp(
-            title: 'FoodGoal',
-            debugShowCheckedModeBanner: false,
-            theme: buildAppTheme(),
-            home: const AppShell(),
+          child: Consumer<LocaleProvider>(
+            builder: (context, locale, _) => MaterialApp(
+              title: 'FoodGoal',
+              debugShowCheckedModeBanner: false,
+              theme: buildAppTheme(),
+              locale: locale.locale,
+              supportedLocales: const [
+                Locale('en'),
+                Locale('es'),
+                Locale('zh'),
+              ],
+              localizationsDelegates: const [
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              home: const AppShell(),
+            ),
           ),
         );
       },
@@ -109,7 +131,12 @@ class _FoodGoalAppState extends State<FoodGoalApp> {
 }
 
 class _BootstrapResult {
-  _BootstrapResult({required this.uid, required this.recipes});
+  _BootstrapResult({
+    required this.uid,
+    required this.recipes,
+    required this.language,
+  });
   final String uid;
   final RecipeRepository recipes;
+  final String language;
 }

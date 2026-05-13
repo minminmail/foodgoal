@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../l10n/app_translations.dart';
+import '../l10n/locale_provider.dart';
 import '../theme/app_theme.dart';
 import 'log_screen.dart';
 import 'pantry_screen.dart';
@@ -29,6 +32,8 @@ class _AppShellState extends State<AppShell> {
 
   @override
   Widget build(BuildContext context) {
+    // Watch so tabs rebuild when language changes.
+    context.watch<LocaleProvider>();
     return Scaffold(
       backgroundColor: AppColors.bg,
       body: SafeArea(
@@ -41,31 +46,31 @@ class _AppShellState extends State<AppShell> {
           setState(() => _index = i);
           if (i == 0) _todayKey.currentState?.reloadProfile();
         },
-        items: const [
+        items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.restaurant_outlined),
-            activeIcon: Icon(Icons.restaurant),
-            label: 'Today',
+            icon: const Icon(Icons.restaurant_outlined),
+            activeIcon: const Icon(Icons.restaurant),
+            label: t(context, 'tab_today'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.inventory_2_outlined),
-            activeIcon: Icon(Icons.inventory_2),
-            label: 'Pantry',
+            icon: const Icon(Icons.inventory_2_outlined),
+            activeIcon: const Icon(Icons.inventory_2),
+            label: t(context, 'tab_pantry'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.menu_book_outlined),
-            activeIcon: Icon(Icons.menu_book),
-            label: 'Meal Track',
+            icon: const Icon(Icons.menu_book_outlined),
+            activeIcon: const Icon(Icons.menu_book),
+            label: t(context, 'tab_meal_track'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.monitor_weight_outlined),
-            activeIcon: Icon(Icons.monitor_weight),
-            label: 'Weight',
+            icon: const Icon(Icons.monitor_weight_outlined),
+            activeIcon: const Icon(Icons.monitor_weight),
+            label: t(context, 'tab_weight'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person_outlined),
-            activeIcon: Icon(Icons.person),
-            label: 'Profile',
+            icon: const Icon(Icons.person_outlined),
+            activeIcon: const Icon(Icons.person),
+            label: t(context, 'tab_profile'),
           ),
         ],
       ),
