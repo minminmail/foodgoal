@@ -4,6 +4,8 @@
 class Recipe {
   final String id;
   final String title;
+  final String? titleEs;
+  final String? titleZh;
   final String emoji; // stand-in for a hero image in v1
   final String cuisine; // 'Mediterranean', 'Spanish', 'Japanese', ...
   final int prepMinutes;
@@ -11,10 +13,16 @@ class Recipe {
   final int approxKcal;
   final List<String> ingredients; // canonical lowercase keys
   final List<String> steps;
+  final List<String>? ingredientsEs;
+  final List<String>? ingredientsZh;
+  final List<String>? stepsEs;
+  final List<String>? stepsZh;
 
   const Recipe({
     required this.id,
     required this.title,
+    this.titleEs,
+    this.titleZh,
     required this.emoji,
     required this.cuisine,
     required this.prepMinutes,
@@ -22,12 +30,54 @@ class Recipe {
     required this.approxKcal,
     required this.ingredients,
     required this.steps,
+    this.ingredientsEs,
+    this.ingredientsZh,
+    this.stepsEs,
+    this.stepsZh,
   });
+
+  /// Returns localized ingredients for the given language code.
+  List<String> localizedIngredients(String lang) {
+    switch (lang) {
+      case 'es':
+        return ingredientsEs ?? ingredients;
+      case 'zh':
+        return ingredientsZh ?? ingredients;
+      default:
+        return ingredients;
+    }
+  }
+
+  /// Returns localized steps for the given language code.
+  List<String> localizedSteps(String lang) {
+    switch (lang) {
+      case 'es':
+        return stepsEs ?? steps;
+      case 'zh':
+        return stepsZh ?? steps;
+      default:
+        return steps;
+    }
+  }
+
+  /// Returns the recipe title for the given language code.
+  String localizedTitle(String lang) {
+    switch (lang) {
+      case 'es':
+        return titleEs ?? title;
+      case 'zh':
+        return titleZh ?? title;
+      default:
+        return title;
+    }
+  }
 
   factory Recipe.fromJson(Map<String, dynamic> json) {
     return Recipe(
       id: json['id'] as String,
       title: json['title'] as String,
+      titleEs: json['title_es'] as String?,
+      titleZh: json['title_zh'] as String?,
       emoji: json['emoji'] as String? ?? '🍽',
       cuisine: json['cuisine'] as String? ?? 'Generic',
       prepMinutes: (json['prepMinutes'] as num?)?.toInt() ?? 30,
@@ -41,6 +91,18 @@ class Recipe {
           .toList(),
       steps: (json['steps'] as List<dynamic>? ?? const [])
           .map((e) => e.toString())
+          .toList(),
+      ingredientsEs: (json['ingredients_es'] as List<dynamic>?)
+          ?.map((e) => e.toString())
+          .toList(),
+      ingredientsZh: (json['ingredients_zh'] as List<dynamic>?)
+          ?.map((e) => e.toString())
+          .toList(),
+      stepsEs: (json['steps_es'] as List<dynamic>?)
+          ?.map((e) => e.toString())
+          .toList(),
+      stepsZh: (json['steps_zh'] as List<dynamic>?)
+          ?.map((e) => e.toString())
           .toList(),
     );
   }

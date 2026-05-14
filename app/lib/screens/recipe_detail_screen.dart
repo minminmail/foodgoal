@@ -21,6 +21,7 @@ class RecipeDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     context.watch<LocaleProvider>();
     final r = suggestion.recipe;
+    final lang = context.read<LocaleProvider>().language;
     return Scaffold(
       backgroundColor: AppColors.bg,
       appBar: AppBar(title: Text(t(context, 'recipe_title'))),
@@ -41,7 +42,7 @@ class RecipeDetailScreen extends StatelessWidget {
             child: Text(r.emoji, style: const TextStyle(fontSize: 48)),
           ),
           const SizedBox(height: 14),
-          Text(r.title,
+          Text(r.localizedTitle(lang),
               style: Theme.of(context)
                   .textTheme
                   .titleLarge
@@ -56,35 +57,39 @@ class RecipeDetailScreen extends StatelessWidget {
             title: t(context, 'recipe_ingredients'),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: r.ingredients.map((ing) {
-                final have =
-                    suggestion.haveIngredients.contains(ing);
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 4),
-                  child: Row(
-                    children: [
-                      Icon(
-                        have ? Icons.check_circle : Icons.radio_button_unchecked,
-                        color: have ? AppColors.brand : AppColors.muted,
-                        size: 16,
-                      ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: Text(
-                          ing,
-                          style: TextStyle(
-                            color: have ? AppColors.text : AppColors.muted,
+              children: [
+                for (int i = 0; i < r.ingredients.length; i++)
+                  () {
+                    final have =
+                        suggestion.haveIngredients.contains(r.ingredients[i]);
+                    final displayName = r.localizedIngredients(lang);
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      child: Row(
+                        children: [
+                          Icon(
+                            have ? Icons.check_circle : Icons.radio_button_unchecked,
+                            color: have ? AppColors.brand : AppColors.muted,
+                            size: 16,
                           ),
-                        ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Text(
+                              i < displayName.length ? displayName[i] : r.ingredients[i],
+                              style: TextStyle(
+                                color: have ? AppColors.text : AppColors.muted,
+                              ),
+                            ),
+                          ),
+                          if (!have)
+                            Text(t(context, 'recipe_needs'),
+                                style: const TextStyle(
+                                    fontSize: 11, color: AppColors.warning)),
+                        ],
                       ),
-                      if (!have)
-                        Text(t(context, 'recipe_needs'),
-                            style: const TextStyle(
-                                fontSize: 11, color: AppColors.warning)),
-                    ],
-                  ),
-                );
-              }).toList(),
+                    );
+                  }(),
+              ],
             ),
           ),
           const SizedBox(height: 16),
@@ -104,7 +109,11 @@ class RecipeDetailScreen extends StatelessWidget {
                                 fontWeight: FontWeight.w700,
                                 color: AppColors.brand)),
                         const SizedBox(width: 8),
-                        Expanded(child: Text(r.steps[i])),
+                        Expanded(child: Text(
+                          i < r.localizedSteps(lang).length
+                              ? r.localizedSteps(lang)[i]
+                              : r.steps[i],
+                        )),
                       ],
                     ),
                   ),
@@ -140,10 +149,12 @@ class RecipeDetailScreen extends StatelessWidget {
     final pantry = context.read<PantryService>();
     final mealLog = context.read<MealLogService>();
     final shop = context.read<ShoppingService>();
+    final lang = context.read<LocaleProvider>().language;
+    final localTitle = suggestion.recipe.localizedTitle(lang);
 
     await mealLog.log(
       slot: slot,
-      name: suggestion.recipe.title,
+      name: localTitle,
       recipeId: suggestion.recipe.id,
       calories: suggestion.recipe.approxKcal.toDouble(),
     );
@@ -153,13 +164,13 @@ class RecipeDetailScreen extends StatelessWidget {
     if (suggestion.missingIngredients.isNotEmpty) {
       await shop.addMany(
         names: suggestion.missingIngredients,
-        forRecipeTitle: suggestion.recipe.title,
+        forRecipeTitle: localTitle,
       );
     }
 
     if (!context.mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(tr(context, 'recipe_logged', {'title': suggestion.recipe.title})),
+      content: Text(tr(context, 'recipe_logged', {'title': localTitle})),
       behavior: SnackBarBehavior.floating,
     ));
     Navigator.of(context).pop();
@@ -167,9 +178,10 @@ class RecipeDetailScreen extends StatelessWidget {
 
   Future<void> _addMissingToShopping(BuildContext context) async {
     final shop = context.read<ShoppingService>();
+    final lang = context.read<LocaleProvider>().language;
     await shop.addMany(
       names: suggestion.missingIngredients,
-      forRecipeTitle: suggestion.recipe.title,
+      forRecipeTitle: suggestion.recipe.localizedTitle(lang),
     );
     if (!context.mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(

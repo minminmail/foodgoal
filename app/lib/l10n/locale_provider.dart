@@ -31,8 +31,18 @@ class LocaleProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Maps app language code to a full intl locale for date formatting.
+  String get intlLocale {
+    switch (_language) {
+      case 'zh':
+        return 'zh_CN';
+      default:
+        return _language;
+    }
+  }
+
   void _applyLocale() {
-    Intl.defaultLocale = _language;
+    Intl.defaultLocale = intlLocale;
   }
 
   /// Maps language code → display name shown in the dropdown.

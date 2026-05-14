@@ -2,448 +2,878 @@
   {
     "id": "lentejas-verduras",
     "title": "Lentejas con verduras",
+    "title_es": "Lentejas con verduras",
+    "title_zh": "蕴菜炖扁豆",
     "emoji": "🥘",
     "cuisine": "Spanish",
     "prepMinutes": 25,
     "effort": "easy",
     "approxKcal": 480,
     "ingredients": ["lentils", "carrot", "onion", "garlic", "olive oil", "smoked paprika", "bay leaf"],
+    "ingredients_es": ["lentejas", "zanahoria", "cebolla", "ajo", "aceite de oliva", "pimentón ahumado", "hoja de laurel"],
+    "ingredients_zh": ["扁豆", "胡萝卜", "洋葱", "大蒜", "橄榄油", "烟熏辣椒粉", "月桂叶"],
     "steps": [
       "Soften the diced onion, carrot and garlic in olive oil until translucent.",
       "Add smoked paprika and toast for 30 seconds.",
       "Stir in the lentils and bay leaf, cover with water by 2 cm.",
       "Simmer 20 minutes, season, and serve."
+    ],
+    "steps_es": [
+      "Sofreír la cebolla, zanahoria y ajo picados en aceite de oliva hasta que estén transparentes.",
+      "Añadir el pimentón ahumado y tostar 30 segundos.",
+      "Incorporar las lentejas y la hoja de laurel, cubrir con agua 2 cm por encima.",
+      "Cocer a fuego lento 20 minutos, salpimentar y servir."
+    ],
+    "steps_zh": [
+      "将切丁的洋葱、胡萝卜和大蒜用橄榄油炒至透明。",
+      "加入烟熏辣椒粉，翻炒30秒。",
+      "加入扁豆和月桂叶，加水没过食材2厘米。",
+      "小火炖煮20分钟，调味后即可上桌。"
     ]
   },
   {
     "id": "miso-noodle-tofu",
     "title": "Miso noodle bowl with tofu",
+    "title_es": "Fideos con miso y tofu",
+    "title_zh": "味噌豆腐拉面",
     "emoji": "🍜",
     "cuisine": "Japanese",
     "prepMinutes": 15,
     "effort": "easy",
     "approxKcal": 520,
     "ingredients": ["tofu", "miso paste", "noodles", "spring onions", "soy sauce"],
+    "ingredients_es": ["tofu", "pasta de miso", "fideos", "cebolletas", "salsa de soja"],
+    "ingredients_zh": ["豆腐", "味噌酱", "面条", "小葱", "酱油"],
     "steps": [
       "Boil noodles per packet, drain, divide between two bowls.",
       "Whisk miso into 600 ml hot water with a splash of soy sauce.",
       "Add cubed tofu to the broth and warm through.",
       "Pour over the noodles and scatter sliced spring onions."
+    ],
+    "steps_es": [
+      "Hervir los fideos según las instrucciones, escurrir y repartir en dos boles.",
+      "Disolver el miso en 600 ml de agua caliente con un chorrito de salsa de soja.",
+      "Añadir el tofu en cubos al caldo y calentar.",
+      "Verter sobre los fideos y decorar con cebolletas en rodajas."
+    ],
+    "steps_zh": [
+      "按包装说明煮面条，沥干后分入两个碗中。",
+      "将味噌搅入600毫升热水中，加少许酱油。",
+      "将切块豆腐放入汤中加热。",
+      "浇在面条上，撒上切好的小葱。"
     ]
   },
   {
     "id": "garlic-prawns-rice",
     "title": "Garlic prawns with brown rice",
+    "title_es": "Gambas al ajillo con arroz integral",
+    "title_zh": "蒜香虎虾配糙米饭",
     "emoji": "🦐",
     "cuisine": "Spanish",
     "prepMinutes": 20,
     "effort": "easy",
     "approxKcal": 560,
     "ingredients": ["prawns", "garlic", "brown rice", "olive oil", "lemon", "parsley"],
+    "ingredients_es": ["gambas", "ajo", "arroz integral", "aceite de oliva", "limón", "perejil"],
+    "ingredients_zh": ["虾", "大蒜", "糙米", "橄榄油", "柠檬", "欧芹"],
     "steps": [
       "Cook brown rice per packet.",
       "Sizzle sliced garlic in olive oil, add prawns, cook 2–3 min per side.",
       "Finish with lemon juice and chopped parsley.",
       "Serve over the rice."
+    ],
+    "steps_es": [
+      "Cocinar el arroz integral según las instrucciones.",
+      "Dorar el ajo laminado en aceite de oliva, añadir las gambas y cocinar 2–3 min por cada lado.",
+      "Terminar con zumo de limón y perejil picado.",
+      "Servir sobre el arroz."
+    ],
+    "steps_zh": [
+      "按包装说明煮糙米。",
+      "用橄榄油煎蒜片，加入虾，每面煎2-3分钟。",
+      "淋上柠檬汁，撒上切碎的欧芹。",
+      "盛在米饭上即可。"
     ]
   },
   {
     "id": "huevos-al-plato",
     "title": "Huevos al plato",
+    "title_es": "Huevos al plato",
+    "title_zh": "焖烤鸡蛋",
     "emoji": "🥚",
     "cuisine": "Spanish",
     "prepMinutes": 15,
     "effort": "easy",
     "approxKcal": 420,
     "ingredients": ["eggs", "tomato", "onion", "garlic", "olive oil", "smoked paprika"],
+    "ingredients_es": ["huevos", "tomate", "cebolla", "ajo", "aceite de oliva", "pimentón ahumado"],
+    "ingredients_zh": ["鸡蛋", "番茄", "洋葱", "大蒜", "橄榄油", "烟熏辣椒粉"],
     "steps": [
       "Soften onion and garlic in olive oil.",
       "Add chopped tomato and smoked paprika, simmer 5 minutes.",
       "Crack eggs on top, cover, cook until whites set."
+    ],
+    "steps_es": [
+      "Sofreír la cebolla y el ajo en aceite de oliva.",
+      "Añadir el tomate picado y el pimentón ahumado, cocer 5 minutos.",
+      "Cascar los huevos encima, tapar y cocinar hasta que cuaje la clara."
+    ],
+    "steps_zh": [
+      "用橄榄油炒软洋葱和大蒜。",
+      "加入切碎的番茄和烟熏辣椒粉，煮5分钟。",
+      "打入鸡蛋，盖上锅盖，煮至蛋白凝固。"
     ]
   },
   {
     "id": "brecol-ajillo",
     "title": "Brécol al ajillo",
+    "title_es": "Brécol al ajillo",
+    "title_zh": "蒜香西兰花",
     "emoji": "🥦",
     "cuisine": "Spanish",
     "prepMinutes": 12,
     "effort": "easy",
     "approxKcal": 280,
     "ingredients": ["broccoli", "garlic", "olive oil", "chilli flakes", "lemon"],
+    "ingredients_es": ["brócoli", "ajo", "aceite de oliva", "chili en escamas", "limón"],
+    "ingredients_zh": ["西兰花", "大蒜", "橄榄油", "辣椒片", "柠檬"],
     "steps": [
       "Steam broccoli florets 4 minutes.",
       "Sizzle sliced garlic in olive oil with chilli flakes.",
       "Toss broccoli through, finish with lemon."
+    ],
+    "steps_es": [
+      "Cocer al vapor los ramilletes de brócoli 4 minutos.",
+      "Dorar el ajo laminado en aceite de oliva con chili en escamas.",
+      "Mezclar el brócoli, terminar con limón."
+    ],
+    "steps_zh": [
+      "将西兰花蒸4分钟。",
+      "用橄榄油煎蒜片和辣椒片至香。",
+      "拌入西兰花，挤上柠檬汁即可。"
     ]
   },
   {
     "id": "tomato-pasta-anchovy",
     "title": "Tomato anchovy pasta",
+    "title_es": "Pasta con tomate y anchoas",
+    "title_zh": "番茄鳀鱼意面",
     "emoji": "🍝",
     "cuisine": "Italian",
     "prepMinutes": 20,
     "effort": "easy",
     "approxKcal": 520,
     "ingredients": ["pasta", "tomato", "anchovy", "garlic", "olive oil", "chilli flakes"],
+    "ingredients_es": ["pasta", "tomate", "anchoas", "ajo", "aceite de oliva", "chili en escamas"],
+    "ingredients_zh": ["意面", "番茄", "鳀鱼", "大蒜", "橄榄油", "辣椒片"],
     "steps": [
       "Boil pasta in salted water.",
       "Melt anchovies in olive oil with garlic and chilli flakes.",
       "Add chopped tomato, simmer 5 min.",
       "Toss with drained pasta."
+    ],
+    "steps_es": [
+      "Hervir la pasta en agua con sal.",
+      "Derretir las anchoas en aceite de oliva con ajo y chili en escamas.",
+      "Añadir el tomate picado, cocer 5 min.",
+      "Mezclar con la pasta escurrida."
+    ],
+    "steps_zh": [
+      "在盐水中煮意面。",
+      "用橄榄油将鳀鱼、大蒜和辣椒片炒化。",
+      "加入切碎的番茄，煮5分钟。",
+      "与沥干的意面拌匀。"
     ]
   },
   {
     "id": "chickpea-stew",
     "title": "Garbanzos con espinacas",
+    "title_es": "Garbanzos con espinacas",
+    "title_zh": "菠菜炖鹰嘴豆",
     "emoji": "🍲",
     "cuisine": "Spanish",
     "prepMinutes": 25,
     "effort": "easy",
     "approxKcal": 460,
     "ingredients": ["chickpeas", "spinach", "tomato", "garlic", "olive oil", "smoked paprika", "cumin"],
+    "ingredients_es": ["garbanzos", "espinacas", "tomate", "ajo", "aceite de oliva", "pimentón ahumado", "comino"],
+    "ingredients_zh": ["鹰嘴豆", "菠菜", "番茄", "大蒜", "橄榄油", "烟熏辣椒粉", "孜然"],
     "steps": [
       "Sauté garlic in olive oil with cumin and smoked paprika.",
       "Add chopped tomato, cook 5 minutes.",
       "Stir in chickpeas, simmer 10 minutes.",
       "Wilt spinach through at the end."
+    ],
+    "steps_es": [
+      "Sofreír el ajo en aceite de oliva con comino y pimentón ahumado.",
+      "Añadir el tomate picado, cocinar 5 minutos.",
+      "Incorporar los garbanzos, cocer a fuego lento 10 minutos.",
+      "Añadir las espinacas al final hasta que se marchiten."
+    ],
+    "steps_zh": [
+      "用橄榄油炒大蒜、孜然和烟熏辣椒粉。",
+      "加入切碎的番茄，煮5分钟。",
+      "加入鹰嘴豆，小火炖10分钟。",
+      "最后加入菠菜拌至变软。"
     ]
   },
   {
     "id": "tortilla-espanola",
     "title": "Tortilla española",
+    "title_es": "Tortilla española",
+    "title_zh": "西班牙土豆蛋饼",
     "emoji": "🍳",
     "cuisine": "Spanish",
     "prepMinutes": 30,
     "effort": "medium",
     "approxKcal": 560,
     "ingredients": ["potato", "onion", "eggs", "olive oil", "salt"],
+    "ingredients_es": ["patata", "cebolla", "huevos", "aceite de oliva", "sal"],
+    "ingredients_zh": ["土豆", "洋葱", "鸡蛋", "橄榄油", "盐"],
     "steps": [
       "Slice potatoes thin, fry slowly in olive oil with sliced onion until soft.",
       "Drain, mix with beaten eggs, season.",
       "Pour into a hot non-stick pan, cook 4 min, flip, cook another 3 min."
+    ],
+    "steps_es": [
+      "Cortar las patatas finas, freír lentamente en aceite de oliva con la cebolla en rodajas hasta que estén blandas.",
+      "Escurrir, mezclar con los huevos batidos y salpimentar.",
+      "Verter en una sartén antiadherente caliente, cocinar 4 min, dar la vuelta y cocinar otros 3 min."
+    ],
+    "steps_zh": [
+      "将土豆切薄片，与洋葱片一起用橄榄油慢煎至软。",
+      "沥干油，与打散的鸡蛋混合，调味。",
+      "倒入热的不粘锅中，煎4分钟，翻面再煎3分钟。"
     ]
   },
   {
     "id": "gambas-ajillo",
     "title": "Gambas al ajillo",
+    "title_es": "Gambas al ajillo",
+    "title_zh": "蒜香油爆虎虾",
     "emoji": "🦐",
     "cuisine": "Spanish",
     "prepMinutes": 10,
     "effort": "easy",
     "approxKcal": 380,
     "ingredients": ["prawns", "garlic", "olive oil", "chilli flakes", "parsley", "bread"],
+    "ingredients_es": ["gambas", "ajo", "aceite de oliva", "chili en escamas", "perejil", "pan"],
+    "ingredients_zh": ["虾", "大蒜", "橄榄油", "辣椒片", "欧芹", "面包"],
     "steps": [
       "Heat olive oil with sliced garlic and chilli until fragrant.",
       "Add prawns, cook 90 seconds per side.",
       "Sprinkle parsley, serve with bread."
+    ],
+    "steps_es": [
+      "Calentar aceite de oliva con ajo laminado y chili hasta que esté fragante.",
+      "Añadir las gambas, cocinar 90 segundos por cada lado.",
+      "Espolvorear perejil y servir con pan."
+    ],
+    "steps_zh": [
+      "用橄榄油加热蒜片和辣椒片至出香味。",
+      "加入虾，每面煎90秒。",
+      "撒上欧芹，配面包食用。"
     ]
   },
   {
     "id": "ensalada-mixta",
     "title": "Ensalada mixta with tuna",
+    "title_es": "Ensalada mixta con atún",
+    "title_zh": "金枪鱼混合沙拉",
     "emoji": "🥗",
     "cuisine": "Spanish",
     "prepMinutes": 8,
     "effort": "easy",
     "approxKcal": 380,
     "ingredients": ["lettuce", "tomato", "onion", "tuna", "olive oil", "vinegar", "olives"],
+    "ingredients_es": ["lechuga", "tomate", "cebolla", "atún", "aceite de oliva", "vinagre", "aceitunas"],
+    "ingredients_zh": ["生菜", "番茄", "洋葱", "金枪鱼", "橄榄油", "醋", "橄榄"],
     "steps": [
       "Tear lettuce into a bowl.",
       "Add chopped tomato, sliced onion, drained tuna and olives.",
       "Dress with olive oil and vinegar."
+    ],
+    "steps_es": [
+      "Trocear la lechuga en un bol.",
+      "Añadir tomate picado, cebolla en rodajas, atún escurrido y aceitunas.",
+      "Aliñar con aceite de oliva y vinagre."
+    ],
+    "steps_zh": [
+      "将生菜撕入碗中。",
+      "加入切碎的番茄、洋葱片、沥干的金枪鱼和橄榄。",
+      "用橄榄油和醋调味。"
     ]
   },
   {
     "id": "patatas-bravas",
     "title": "Patatas bravas",
+    "title_es": "Patatas bravas",
+    "title_zh": "辣味土豆块",
     "emoji": "🥔",
     "cuisine": "Spanish",
     "prepMinutes": 35,
     "effort": "medium",
     "approxKcal": 480,
     "ingredients": ["potato", "olive oil", "tomato", "garlic", "smoked paprika", "chilli flakes"],
+    "ingredients_es": ["patata", "aceite de oliva", "tomate", "ajo", "pimentón ahumado", "chili en escamas"],
+    "ingredients_zh": ["土豆", "橄榄油", "番茄", "大蒜", "烟熏辣椒粉", "辣椒片"],
     "steps": [
       "Cube potatoes, toss with olive oil and roast at 220°C for 30 minutes.",
       "Simmer tomato with garlic, smoked paprika and chilli flakes for 10 minutes.",
       "Drizzle sauce over potatoes."
+    ],
+    "steps_es": [
+      "Cortar las patatas en cubos, mezclar con aceite de oliva y asar a 220°C durante 30 minutos.",
+      "Cocer el tomate con ajo, pimentón ahumado y chili en escamas durante 10 minutos.",
+      "Verter la salsa sobre las patatas."
+    ],
+    "steps_zh": [
+      "将土豆切块，拌上橄榄油，220°C烤30分钟。",
+      "将番茄与大蒜、烟熏辣椒粉和辣椒片煮10分钟。",
+      "将酱汁淋在土豆上。"
     ]
   },
   {
     "id": "caprese",
     "title": "Tomato mozzarella plate",
+    "title_es": "Ensalada caprese",
+    "title_zh": "番茄马苏里拉沙拉",
     "emoji": "🍅",
     "cuisine": "Italian",
     "prepMinutes": 5,
     "effort": "easy",
     "approxKcal": 380,
     "ingredients": ["tomato", "mozzarella", "basil", "olive oil", "salt"],
+    "ingredients_es": ["tomate", "mozzarella", "albahaca", "aceite de oliva", "sal"],
+    "ingredients_zh": ["番茄", "马苏里拉奶酪", "罗勒", "橄榄油", "盐"],
     "steps": [
       "Slice tomato and mozzarella, fan onto a plate.",
       "Tear basil over, drizzle olive oil, season."
+    ],
+    "steps_es": [
+      "Cortar el tomate y la mozzarella en rodajas, disponerlas en un plato.",
+      "Añadir albahaca, rociar aceite de oliva y salpimentar."
+    ],
+    "steps_zh": [
+      "将番茄和马苏里拉奶酪切片，扇形摆放在盘中。",
+      "撕上罗勒叶，淋橄榄油，调味。"
     ]
   },
   {
     "id": "pasta-aglio-olio",
     "title": "Pasta aglio e olio",
+    "title_es": "Pasta al ajillo con aceite",
+    "title_zh": "蒜香橄榄油意面",
     "emoji": "🍝",
     "cuisine": "Italian",
     "prepMinutes": 12,
     "effort": "easy",
     "approxKcal": 480,
     "ingredients": ["pasta", "garlic", "olive oil", "chilli flakes", "parsley"],
+    "ingredients_es": ["pasta", "ajo", "aceite de oliva", "chili en escamas", "perejil"],
+    "ingredients_zh": ["意面", "大蒜", "橄榄油", "辣椒片", "欧芹"],
     "steps": [
       "Boil pasta until just shy of al dente.",
       "Slowly toast sliced garlic in plenty of olive oil with chilli flakes.",
       "Toss pasta and a splash of pasta water through, finish with parsley."
+    ],
+    "steps_es": [
+      "Hervir la pasta hasta que esté casi al dente.",
+      "Tostar lentamente el ajo laminado en abundante aceite de oliva con chili en escamas.",
+      "Mezclar la pasta con un poco de agua de cocción, terminar con perejil."
+    ],
+    "steps_zh": [
+      "将意面煮至接近弹牙。",
+      "用大量橄榄油小火煎蒜片和辣椒片。",
+      "加入意面和少许煮面水拌匀，撒上欧芹。"
     ]
   },
   {
     "id": "minestrone",
     "title": "Minestrone soup",
+    "title_es": "Sopa minestrone",
+    "title_zh": "意式蔬菜汤",
     "emoji": "🍲",
     "cuisine": "Italian",
     "prepMinutes": 30,
     "effort": "medium",
     "approxKcal": 380,
     "ingredients": ["onion", "carrot", "celery", "tomato", "beans", "pasta", "olive oil", "garlic"],
+    "ingredients_es": ["cebolla", "zanahoria", "apio", "tomate", "alubias", "pasta", "aceite de oliva", "ajo"],
+    "ingredients_zh": ["洋葱", "胡萝卜", "芹菜", "番茄", "豆子", "意面", "橄榄油", "大蒜"],
     "steps": [
       "Soften onion, carrot, celery and garlic in olive oil.",
       "Add chopped tomato and 1 L water, simmer 15 minutes.",
       "Stir in beans and small pasta, cook another 8 minutes."
+    ],
+    "steps_es": [
+      "Sofreír la cebolla, zanahoria, apio y ajo en aceite de oliva.",
+      "Añadir el tomate picado y 1 L de agua, cocer a fuego lento 15 minutos.",
+      "Incorporar las alubias y la pasta pequeña, cocinar otros 8 minutos."
+    ],
+    "steps_zh": [
+      "用橄榄油炒软洋葱、胡萝卜、芹菜和大蒜。",
+      "加入切碎的番茄和1升水，小火煮15分钟。",
+      "加入豆子和小意面，再煮8分钟。"
     ]
   },
   {
     "id": "greek-salad",
     "title": "Greek salad",
+    "title_es": "Ensalada griega",
+    "title_zh": "希腊沙拉",
     "emoji": "🥗",
     "cuisine": "Mediterranean",
     "prepMinutes": 8,
     "effort": "easy",
     "approxKcal": 360,
     "ingredients": ["tomato", "cucumber", "onion", "feta", "olives", "olive oil", "oregano"],
+    "ingredients_es": ["tomate", "pepino", "cebolla", "queso feta", "aceitunas", "aceite de oliva", "orégano"],
+    "ingredients_zh": ["番茄", "黄瓜", "洋葱", "菲达奶酪", "橄榄", "橄榄油", "牛至"],
     "steps": [
       "Chop tomato, cucumber and onion into a bowl.",
       "Add olives and crumbled feta.",
       "Dress with olive oil and oregano."
+    ],
+    "steps_es": [
+      "Picar tomate, pepino y cebolla en un bol.",
+      "Añadir aceitunas y queso feta desmenuzado.",
+      "Aliñar con aceite de oliva y orégano."
+    ],
+    "steps_zh": [
+      "将番茄、黄瓜和洋葱切块放入碗中。",
+      "加入橄榄和碎菲达奶酪。",
+      "用橄榄油和牛至调味。"
     ]
   },
   {
     "id": "shakshuka",
     "title": "Shakshuka",
+    "title_es": "Shakshuka",
+    "title_zh": "北非番茄烤蛋",
     "emoji": "🍳",
     "cuisine": "Mediterranean",
     "prepMinutes": 25,
     "effort": "easy",
     "approxKcal": 460,
     "ingredients": ["eggs", "tomato", "pepper", "onion", "garlic", "olive oil", "cumin", "smoked paprika"],
+    "ingredients_es": ["huevos", "tomate", "pimiento", "cebolla", "ajo", "aceite de oliva", "comino", "pimentón ahumado"],
+    "ingredients_zh": ["鸡蛋", "番茄", "甜椒", "洋葱", "大蒜", "橄榄油", "孜然", "烟熏辣椒粉"],
     "steps": [
       "Soften onion and pepper in olive oil with cumin and paprika.",
       "Add tomato, simmer 10 minutes.",
       "Crack in eggs, cover, cook until whites set."
+    ],
+    "steps_es": [
+      "Sofreír la cebolla y el pimiento en aceite de oliva con comino y pimentón.",
+      "Añadir el tomate, cocer a fuego lento 10 minutos.",
+      "Cascar los huevos, tapar y cocinar hasta que cuaje la clara."
+    ],
+    "steps_zh": [
+      "用橄榄油将洋葱和甜椒与孜然、辣椒粉一起炒软。",
+      "加入番茄，小火煮10分钟。",
+      "打入鸡蛋，盖上锅盖，煮至蛋白凝固。"
     ]
   },
   {
     "id": "hummus-bowl",
     "title": "Hummus and roasted veg bowl",
+    "title_es": "Bol de hummus con verduras asadas",
+    "title_zh": "烤蔬鹰嘴豆泥碗",
     "emoji": "🥣",
     "cuisine": "Mediterranean",
     "prepMinutes": 30,
     "effort": "medium",
     "approxKcal": 540,
     "ingredients": ["chickpeas", "tahini", "lemon", "garlic", "olive oil", "carrot", "courgette"],
+    "ingredients_es": ["garbanzos", "tahini", "limón", "ajo", "aceite de oliva", "zanahoria", "calabacín"],
+    "ingredients_zh": ["鹰嘴豆", "芝麻酱", "柠檬", "大蒜", "橄榄油", "胡萝卜", "西葫芦"],
     "steps": [
       "Roast carrot and courgette with olive oil at 220°C for 25 minutes.",
       "Blend chickpeas with tahini, lemon and garlic for hummus.",
       "Spoon hummus on a plate, top with veg."
+    ],
+    "steps_es": [
+      "Asar zanahoria y calabacín con aceite de oliva a 220°C durante 25 minutos.",
+      "Triturar garbanzos con tahini, limón y ajo para hacer hummus.",
+      "Servir el hummus en un plato y cubrir con las verduras."
+    ],
+    "steps_zh": [
+      "将胡萝卜和西葫芦拌上橄榄油，220°C烤25分钟。",
+      "将鹰嘴豆与芝麻酱、柠檬和大蒜打成鹰嘴豆泥。",
+      "将鹰嘴豆泥盛盘，铺上烤蔬菜。"
     ]
   },
   {
     "id": "cold-soba",
     "title": "Cold soba with cucumber",
+    "title_es": "Soba fría con pepino",
+    "title_zh": "凉拌荞麦面配黄瓜",
     "emoji": "🥒",
     "cuisine": "Japanese",
     "prepMinutes": 12,
     "effort": "easy",
     "approxKcal": 430,
     "ingredients": ["soba", "cucumber", "soy sauce", "sesame oil", "spring onions", "sesame seeds"],
+    "ingredients_es": ["soba", "pepino", "salsa de soja", "aceite de sésamo", "cebolletas", "semillas de sésamo"],
+    "ingredients_zh": ["荞麦面", "黄瓜", "酱油", "芝麻油", "小葱", "芝麻"],
     "steps": [
       "Boil soba 4 min, rinse cold.",
       "Whisk soy sauce, a few drops of sesame oil, water for dipping.",
       "Top noodles with sliced cucumber, spring onions and sesame seeds."
+    ],
+    "steps_es": [
+      "Hervir la soba 4 min, enjuagar con agua fría.",
+      "Mezclar salsa de soja, unas gotas de aceite de sésamo y agua para mojar.",
+      "Cubrir los fideos con pepino en rodajas, cebolletas y semillas de sésamo."
+    ],
+    "steps_zh": [
+      "煮荞麦面4分钟，过冷水。",
+      "将酱油、几滴芝麻油和水调成蘸汁。",
+      "在面条上放黄瓜片、小葱和芝麻。"
     ]
   },
   {
     "id": "tofu-stirfry",
     "title": "Tofu and broccoli stir-fry",
+    "title_es": "Salteado de tofu con brócoli",
+    "title_zh": "豆腐西兰花炒",
     "emoji": "🥦",
     "cuisine": "Chinese",
     "prepMinutes": 15,
     "effort": "easy",
     "approxKcal": 460,
     "ingredients": ["tofu", "broccoli", "garlic", "ginger", "soy sauce", "rice", "sesame oil"],
+    "ingredients_es": ["tofu", "brócoli", "ajo", "jengibre", "salsa de soja", "arroz", "aceite de sésamo"],
+    "ingredients_zh": ["豆腐", "西兰花", "大蒜", "生姜", "酱油", "米饭", "芝麻油"],
     "steps": [
       "Cook rice.",
       "Stir-fry cubed tofu in oil until golden.",
       "Add garlic, ginger, broccoli, splash of water, cover 3 minutes.",
       "Finish with soy sauce and a drizzle of sesame oil. Serve over rice."
+    ],
+    "steps_es": [
+      "Cocinar el arroz.",
+      "Saltear el tofu en cubos en aceite hasta que esté dorado.",
+      "Añadir ajo, jengibre, brócoli y un chorrito de agua, tapar 3 minutos.",
+      "Terminar con salsa de soja y un chorrito de aceite de sésamo. Servir sobre arroz."
+    ],
+    "steps_zh": [
+      "煮米饭。",
+      "将豆腐切块，用油煎至金黄。",
+      "加入大蒜、生姜、西兰花和少许水，盖上锅盖焖3分钟。",
+      "淋上酱油和芝麻油，配米饭食用。"
     ]
   },
   {
     "id": "egg-fried-rice",
     "title": "Egg fried rice",
+    "title_es": "Arroz frito con huevo",
+    "title_zh": "蛋炒饭",
     "emoji": "🍚",
     "cuisine": "Chinese",
     "prepMinutes": 12,
     "effort": "easy",
     "approxKcal": 520,
     "ingredients": ["rice", "eggs", "spring onions", "soy sauce", "garlic", "sesame oil", "peas"],
+    "ingredients_es": ["arroz", "huevos", "cebolletas", "salsa de soja", "ajo", "aceite de sésamo", "guisantes"],
+    "ingredients_zh": ["米饭", "鸡蛋", "小葱", "酱油", "大蒜", "芝麻油", "豌豆"],
     "steps": [
       "Use cold cooked rice if possible.",
       "Scramble eggs in a hot wok, push to the side.",
       "Add garlic, peas and spring onions, then rice.",
       "Toss with soy sauce and a few drops of sesame oil."
+    ],
+    "steps_es": [
+      "Usar arroz cocido frío si es posible.",
+      "Revolver los huevos en un wok caliente, apartar a un lado.",
+      "Añadir ajo, guisantes y cebolletas, luego el arroz.",
+      "Mezclar con salsa de soja y unas gotas de aceite de sésamo."
+    ],
+    "steps_zh": [
+      "尽量使用冷米饭。",
+      "在热锅中炒散鸡蛋，推到一旁。",
+      "加入大蒜、豌豆和小葱，然后加米饭。",
+      "淋上酱油和几滴芝麻油翻炒均匀。"
     ]
   },
   {
     "id": "bibimbap",
     "title": "Quick bibimbap",
+    "title_es": "Bibimbap rápido",
+    "title_zh": "快手石锅拌饭",
     "emoji": "🍱",
     "cuisine": "Korean",
     "prepMinutes": 25,
     "effort": "medium",
     "approxKcal": 580,
     "ingredients": ["rice", "eggs", "spinach", "carrot", "courgette", "soy sauce", "sesame oil", "garlic"],
+    "ingredients_es": ["arroz", "huevos", "espinacas", "zanahoria", "calabacín", "salsa de soja", "aceite de sésamo", "ajo"],
+    "ingredients_zh": ["米饭", "鸡蛋", "菠菜", "胡萝卜", "西葫芦", "酱油", "芝麻油", "大蒜"],
     "steps": [
       "Cook rice.",
       "Sauté each vegetable separately with a little garlic and sesame oil.",
       "Fry an egg per bowl.",
       "Pile rice, vegetables and egg, drizzle soy sauce."
+    ],
+    "steps_es": [
+      "Cocinar el arroz.",
+      "Saltear cada verdura por separado con un poco de ajo y aceite de sésamo.",
+      "Freír un huevo por bol.",
+      "Montar el arroz, las verduras y el huevo, rociar con salsa de soja."
+    ],
+    "steps_zh": [
+      "煮米饭。",
+      "每种蔬菜分别用少许大蒜和芝麻油炒熟。",
+      "每碗煎一个鸡蛋。",
+      "将米饭、蔬菜和鸡蛋摆好，淋上酱油。"
     ]
   },
   {
     "id": "kimchi-fried-rice",
     "title": "Kimchi fried rice",
+    "title_es": "Arroz frito con kimchi",
+    "title_zh": "泡菜炒饭",
     "emoji": "🌶",
     "cuisine": "Korean",
     "prepMinutes": 12,
     "effort": "easy",
     "approxKcal": 540,
     "ingredients": ["rice", "kimchi", "spring onions", "soy sauce", "sesame oil", "eggs"],
+    "ingredients_es": ["arroz", "kimchi", "cebolletas", "salsa de soja", "aceite de sésamo", "huevos"],
+    "ingredients_zh": ["米饭", "泡菜", "小葱", "酱油", "芝麻油", "鸡蛋"],
     "steps": [
       "Stir-fry chopped kimchi in oil 2 minutes.",
       "Add rice, splash of soy and sesame oil, toss.",
       "Top each portion with a fried egg."
+    ],
+    "steps_es": [
+      "Saltear el kimchi picado en aceite 2 minutos.",
+      "Añadir el arroz, un chorrito de soja y aceite de sésamo, mezclar.",
+      "Coronar cada porción con un huevo frito."
+    ],
+    "steps_zh": [
+      "将切碎的泡菜用油炒2分钟。",
+      "加入米饭、少许酱油和芝麻油，翻炒均匀。",
+      "每份上面放一个煎蛋。"
     ]
   },
   {
     "id": "miso-soup",
     "title": "Miso soup with tofu",
+    "title_es": "Sopa de miso con tofu",
+    "title_zh": "豆腐味噌汤",
     "emoji": "🥣",
     "cuisine": "Japanese",
     "prepMinutes": 8,
     "effort": "easy",
     "approxKcal": 220,
     "ingredients": ["miso paste", "tofu", "spring onions", "wakame"],
+    "ingredients_es": ["pasta de miso", "tofu", "cebolletas", "wakame"],
+    "ingredients_zh": ["味噌酱", "豆腐", "小葱", "裙带菜"],
     "steps": [
       "Soak wakame in cold water 5 minutes.",
       "Heat 700 ml water but do not boil; whisk in miso.",
       "Add cubed tofu, drained wakame, sliced spring onions."
+    ],
+    "steps_es": [
+      "Remojar el wakame en agua fría 5 minutos.",
+      "Calentar 700 ml de agua sin hervir; disolver el miso.",
+      "Añadir el tofu en cubos, el wakame escurrido y las cebolletas en rodajas."
+    ],
+    "steps_zh": [
+      "将裙带菜用冷水泡5分钟。",
+      "加热700毫升水但不要煮沸，搅入味噌。",
+      "加入切块豆腐、沥干的裙带菜和葱花。"
     ]
   },
   {
     "id": "japanese-curry",
     "title": "Japanese vegetable curry",
+    "title_es": "Curry japonés de verduras",
+    "title_zh": "日式蔬菜咖喱",
     "emoji": "🍛",
     "cuisine": "Japanese",
     "prepMinutes": 35,
     "effort": "medium",
     "approxKcal": 620,
     "ingredients": ["onion", "carrot", "potato", "curry roux", "rice", "soy sauce"],
+    "ingredients_es": ["cebolla", "zanahoria", "patata", "roux de curry", "arroz", "salsa de soja"],
+    "ingredients_zh": ["洋葱", "胡萝卜", "土豆", "咖喱块", "米饭", "酱油"],
     "steps": [
       "Soften chopped onion, add carrot and potato, cover with water.",
       "Simmer 20 minutes until tender.",
       "Stir in curry roux until thick.",
       "Serve over rice."
+    ],
+    "steps_es": [
+      "Sofreír la cebolla picada, añadir zanahoria y patata, cubrir con agua.",
+      "Cocer a fuego lento 20 minutos hasta que estén tiernos.",
+      "Incorporar el roux de curry hasta que espese.",
+      "Servir sobre arroz."
+    ],
+    "steps_zh": [
+      "炒软切碎的洋葱，加入胡萝卜和土豆，加水没过食材。",
+      "小火煮20分钟至食材变软。",
+      "加入咖喱块搅拌至浓稠。",
+      "配米饭食用。"
     ]
   },
   {
     "id": "chicken-teriyaki",
     "title": "Chicken teriyaki bowl",
+    "title_es": "Bol de pollo teriyaki",
+    "title_zh": "照烧鸡肉盖饭",
     "emoji": "🍗",
     "cuisine": "Japanese",
     "prepMinutes": 20,
     "effort": "easy",
     "approxKcal": 580,
     "ingredients": ["chicken thigh", "soy sauce", "mirin", "sugar", "rice", "spring onions", "ginger"],
+    "ingredients_es": ["muslo de pollo", "salsa de soja", "mirin", "azúcar", "arroz", "cebolletas", "jengibre"],
+    "ingredients_zh": ["鸡腿肉", "酱油", "味醂", "糖", "米饭", "小葱", "生姜"],
     "steps": [
       "Cook rice.",
       "Pan-fry chicken thighs skin-side down 6 min, flip 4 min.",
       "Add soy sauce, mirin, a teaspoon of sugar and grated ginger; reduce to a glaze.",
       "Slice and serve over rice with spring onions."
+    ],
+    "steps_es": [
+      "Cocinar el arroz.",
+      "Freír los muslos de pollo con la piel hacia abajo 6 min, dar la vuelta 4 min.",
+      "Añadir salsa de soja, mirin, una cucharadita de azúcar y jengibre rallado; reducir hasta glasear.",
+      "Cortar y servir sobre arroz con cebolletas."
+    ],
+    "steps_zh": [
+      "煮米饭。",
+      "鸡腿肉皮面朝下煎6分钟，翻面煎4分钟。",
+      "加入酱油、味醂、一茶匙糖和姜末，收汁至浓稠。",
+      "切片盛在米饭上，撒上小葱。"
     ]
   },
   {
     "id": "mapo-tofu",
     "title": "Mapo tofu (mild)",
+    "title_es": "Mapo tofu (suave)",
+    "title_zh": "麻婆豆腐（微辣）",
     "emoji": "🍲",
     "cuisine": "Chinese",
     "prepMinutes": 20,
     "effort": "medium",
     "approxKcal": 510,
     "ingredients": ["tofu", "pork mince", "garlic", "ginger", "soy sauce", "doubanjiang", "rice", "spring onions"],
+    "ingredients_es": ["tofu", "carne picada de cerdo", "ajo", "jengibre", "salsa de soja", "doubanjiang", "arroz", "cebolletas"],
+    "ingredients_zh": ["豆腐", "猪肉末", "大蒜", "生姜", "酱油", "豆瓣酱", "米饭", "小葱"],
     "steps": [
       "Brown pork mince with garlic and ginger.",
       "Stir in doubanjiang and soy sauce.",
       "Add 200 ml water and cubed tofu, simmer 8 minutes.",
       "Top with spring onions and serve over rice."
+    ],
+    "steps_es": [
+      "Dorar la carne picada de cerdo con ajo y jengibre.",
+      "Incorporar el doubanjiang y la salsa de soja.",
+      "Añadir 200 ml de agua y el tofu en cubos, cocer a fuego lento 8 minutos.",
+      "Decorar con cebolletas y servir sobre arroz."
+    ],
+    "steps_zh": [
+      "将猪肉末与大蒜和生姜炒至变色。",
+      "加入豆瓣酱和酱油翻炒。",
+      "加入200毫升水和切块豆腐，小火炖8分钟。",
+      "撒上小葱，配米饭食用。"
     ]
   },
   {
     "id": "dal-tadka",
     "title": "Dal tadka",
+    "title_es": "Dal tadka",
+    "title_zh": "印度炖扁豆",
     "emoji": "🍛",
     "cuisine": "Indian",
     "prepMinutes": 30,
     "effort": "easy",
     "approxKcal": 460,
     "ingredients": ["lentils", "onion", "garlic", "tomato", "cumin", "turmeric", "ginger", "rice"],
+    "ingredients_es": ["lentejas", "cebolla", "ajo", "tomate", "comino", "cúrcuma", "jengibre", "arroz"],
+    "ingredients_zh": ["扁豆", "洋葱", "大蒜", "番茄", "孜然", "姜黄", "生姜", "米饭"],
     "steps": [
       "Simmer lentils with turmeric until soft.",
       "Sizzle cumin in oil, add onion, garlic, ginger, then tomato.",
       "Stir tempering through dal.",
       "Serve over rice."
+    ],
+    "steps_es": [
+      "Cocer las lentejas con cúrcuma hasta que estén blandas.",
+      "Tostar el comino en aceite, añadir cebolla, ajo, jengibre y luego tomate.",
+      "Mezclar el tempero con el dal.",
+      "Servir sobre arroz."
+    ],
+    "steps_zh": [
+      "将扁豆与姜黄一起煮至软烂。",
+      "用油爆香孜然，加入洋葱、大蒜、生姜，再加番茄。",
+      "将调味料拌入扁豆糊中。",
+      "配米饭食用。"
     ]
   },
   {
     "id": "chana-masala",
     "title": "Chana masala",
+    "title_es": "Chana masala",
+    "title_zh": "印度鹰嘴豆咖喱",
     "emoji": "🥘",
     "cuisine": "Indian",
     "prepMinutes": 30,
     "effort": "medium",
     "approxKcal": 520,
     "ingredients": ["chickpeas", "onion", "tomato", "garlic", "ginger", "cumin", "garam masala", "rice"],
+    "ingredients_es": ["garbanzos", "cebolla", "tomate", "ajo", "jengibre", "comino", "garam masala", "arroz"],
+    "ingredients_zh": ["鹰嘴豆", "洋葱", "番茄", "大蒜", "生姜", "孜然", "印度混合香料", "米饭"],
     "steps": [
       "Soften onion in oil with cumin.",
       "Add ginger, garlic, then tomato; cook to a paste.",
       "Stir in chickpeas and garam masala, simmer 15 minutes.",
       "Serve with rice."
+    ],
+    "steps_es": [
+      "Sofreír la cebolla en aceite con comino.",
+      "Añadir jengibre, ajo y luego tomate; cocinar hasta formar una pasta.",
+      "Incorporar los garbanzos y el garam masala, cocer a fuego lento 15 minutos.",
+      "Servir con arroz."
+    ],
+    "steps_zh": [
+      "用油和孜然炒软洋葱。",
+      "加入生姜、大蒜，再加番茄，炒成糊状。",
+      "加入鹰嘴豆和印度混合香料，小火炖15分钟。",
+      "配米饭食用。"
     ]
   },
   {
     "id": "veg-pho-style-noodles",
     "title": "Quick veg noodle soup",
+    "title_es": "Sopa rápida de fideos con verduras",
+    "title_zh": "快手蔬菜汤面",
     "emoji": "🍜",
     "cuisine": "Generic",
     "prepMinutes": 15,
     "effort": "easy",
     "approxKcal": 420,
     "ingredients": ["noodles", "vegetable stock", "ginger", "garlic", "spring onions", "carrot", "spinach", "soy sauce"],
+    "ingredients_es": ["fideos", "caldo de verduras", "jengibre", "ajo", "cebolletas", "zanahoria", "espinacas", "salsa de soja"],
+    "ingredients_zh": ["面条", "蔬菜高汤", "生姜", "大蒜", "小葱", "胡萝卜", "菠菜", "酱油"],
     "steps": [
       "Simmer stock with sliced ginger and garlic 5 minutes.",
       "Add carrot ribbons and noodles, cook per packet.",
       "Off heat, wilt spinach, finish with soy sauce and spring onions."
+    ],
+    "steps_es": [
+      "Cocer el caldo con jengibre y ajo en rodajas durante 5 minutos.",
+      "Añadir tiras de zanahoria y fideos, cocinar según las instrucciones.",
+      "Fuera del fuego, añadir espinacas, terminar con salsa de soja y cebolletas."
+    ],
+    "steps_zh": [
+      "将高汤与姜片和蒜片一起煮5分钟。",
+      "加入胡萝卜丝和面条，按包装说明煮熟。",
+      "离火后加入菠菜，淋上酱油，撒上小葱。"
     ]
   }
 ]

@@ -30,7 +30,9 @@ class _LogScreenState extends State<LogScreen> {
     return Scaffold(
       backgroundColor: AppColors.bg,
       appBar: AppBar(
-        title: Text(isToday ? t(context, 'log_title') : DateFormat('EEEE').format(_day)),
+        title: Text(isToday
+            ? t(context, 'log_title')
+            : DateFormat('EEEE', context.read<LocaleProvider>().intlLocale).format(_day)),
       ),
       body: StreamBuilder<List<MealLogEntry>>(
         stream: mealLog.watchDay(_day),
@@ -226,7 +228,7 @@ class _DayPill extends StatelessWidget {
               constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
             ),
             Text(
-              DateFormat('EEEE, d MMM').format(day),
+              DateFormat('EEEE, d MMM', context.read<LocaleProvider>().intlLocale).format(day),
               style: const TextStyle(fontSize: 12, color: AppColors.muted),
             ),
             IconButton(

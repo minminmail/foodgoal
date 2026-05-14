@@ -142,7 +142,8 @@ class _Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final now = DateTime.now();
-    final stamp = DateFormat('EEEE, d MMM').format(now);
+    final locale = context.read<LocaleProvider>().intlLocale;
+    final stamp = DateFormat('EEEE, d MMM', locale).format(now);
     final greeting = profile != null && profile!.name.isNotEmpty
         ? tr(context, 'today_hi', {'name': profile!.name})
         : t(context, 'today_today');
@@ -310,6 +311,7 @@ class _SuggestionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final r = suggestion.recipe;
+    final lang = context.read<LocaleProvider>().language;
     return InkWell(
       borderRadius: BorderRadius.circular(16),
       onTap: () => Navigator.of(context).push(
@@ -347,7 +349,7 @@ class _SuggestionCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(r.title,
+                  Text(r.localizedTitle(lang),
                       style: Theme.of(context).textTheme.titleMedium),
                   const SizedBox(height: 4),
                   Text(
